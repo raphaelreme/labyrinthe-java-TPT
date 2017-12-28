@@ -27,10 +27,12 @@ public class Panel extends JPanel{
 		
 		int l = mainWindow.getModel().getM().getLength();
 		int w = mainWindow.getModel().getM().getWidth();
-		//dimension d'une case du labyrinthe 
-
-		float height = this.getHeight()/l;
-		float width = this.getWidth()/w;
+		/*
+		 * dimension d'une case du labyrinthe 
+		 * floatant pour mieux s'adapter à la taille du panel
+		*/
+		float height = this.getHeight()/(float)l;
+		float width = this.getWidth()/(float)w;
 		
 		for (int i=0; i<l; i++){
 			for (int j=0; j<w; j++){
@@ -43,21 +45,13 @@ public class Panel extends JPanel{
 				} else if (charIJ == "D"){
 					img = mainWindow.getModel().getStart();
 				}
+				/*
+				 * quelques cases seront de largeur (resp hauteur) width+1 (resp height+1) pour compenser le surplus de pixels
+				 * On pourrait aussi faire toutes les cases de meme taille et compenser avec des murs comme dans la 1ere version de cette
+				 * fonction mais cela rend moins bien !
+				 */
 				g.drawImage(img,(int)(j*width),(int)(i*height),(int)width+1,(int)height+1,this);
 			}
 		}
-		/*
-		 * la taille du panel n'est pas toujours divisible par le nombre de cases !
-		 * Il faut rajouter des murs aux extremités pour indiquer qu'on ne peut pas passer par là
-		 * (c'est seulement du design, cela n'apparait pas dans le labyrinthe)
-		 */
-		
-		for (int i=0; i<l; i++){
-			g.drawImage(mainWindow.getModel().getWall(),(int)(w*width),(int)(i*height),(int)width,(int)height,this);
-		}
-		for (int j=0; j<=w; j++){
-			g.drawImage(mainWindow.getModel().getWall(),(int)(j*width),(int)(l*height),(int)width,(int)height,this);
-		}
-		
 	}
 }
