@@ -17,7 +17,7 @@ public class MazeModel extends Observable {
 	private Image wall;
 	private Image start;
 	private Image arrival;
-	private Maze m;
+	private Maze m= new Maze();
 	private String file;
 	
 	public MazeModel(){
@@ -25,8 +25,15 @@ public class MazeModel extends Observable {
 		 * Les images ne sont chargées qu'une seule fois : ici. Cela permet de modifier les noms des fichiers facilement.
 		 */
 		start = loadImage("depart.png");
+		arrival = loadImage("arrivee.png");
 		background = loadImage("fond.jpg");
 		wall = loadImage("mur.png");
+		
+		file = null;
+		
+		file = "file/labyrinthe2.txt";
+		m.initFromTextFile(file);
+		
 	}
 	
 	
@@ -68,6 +75,7 @@ public class MazeModel extends Observable {
 	
 	public void changeFile(String f){
 		file = f;
+		initMaze();
 	}
 	
 	public void initMaze(){
