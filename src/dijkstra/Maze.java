@@ -34,6 +34,14 @@ public class Maze implements GraphInterface {
 		return length*width;
 	}
 	
+	public int getLength(){
+		return length;
+	}
+	
+	public int getWidth(){
+		return width;
+	}
+	
 	public int getWeight(VertexInterface x, VertexInterface y){
 		
 		//Normalement dans l'utilisation faite par Dijkstra cela n'est jamais le cas ! (x et y sont tjs voisins)
@@ -84,6 +92,10 @@ public class Maze implements GraphInterface {
 				throw new MazeReadingException(fileName,-1,"Fichier vide");
 			}
 			final int m = ligne.length();
+			if (m == 0){
+				throw new MazeReadingException(fileName,0,"ligne vide");
+			}
+			
 			int i = 0;
 			
 			
@@ -179,6 +191,10 @@ public class Maze implements GraphInterface {
 			}
 		}
 		return null;
+	}
+	
+	public String getLetter(int i, int j){
+		return ((MBox) matrice.get(i).get(j)).getLetter();
 	}
 }
 
