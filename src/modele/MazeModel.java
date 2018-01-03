@@ -29,11 +29,7 @@ public class MazeModel extends Observable {
 		background = loadImage("fond.jpg");
 		wall = loadImage("mur.png");
 		
-		file = null;
-		
-		file = "file/labyrinthe2.txt";
-		m.initFromTextFile(file);
-		
+		file = null;	
 	}
 	
 	
@@ -80,7 +76,8 @@ public class MazeModel extends Observable {
 	
 	public void initMaze(){
 		m.initFromTextFile(file);
-		notifyObservers();
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	

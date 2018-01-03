@@ -80,7 +80,19 @@ public class Maze implements GraphInterface {
 		
 	}
 	
+	/*
+	 * Crée le maze à partir d'un fichier texte
+	 * Si le pointeur passé en parametre est null, le maze est réinitialisé
+	 */
 	public final void initFromTextFile(String fileName){
+		
+		if (fileName == null){
+			length = 0;
+			width = 0;
+			matrice = null;
+			listeSommets = null;
+			return;
+		}
 		BufferedReader text = null;
 		try{
 			text = new BufferedReader(new FileReader(fileName));
