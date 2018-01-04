@@ -28,6 +28,7 @@ public class MazeModel extends Observable {
 	private String file;
 	private Maze m= new Maze();
 	private ArrayList<int[]> dijkstra;
+	private int speed;
 	
 	
 	
@@ -44,7 +45,9 @@ public class MazeModel extends Observable {
 		
 		file = null;
 		dijkstra = new ArrayList<int[]>();
+		speed = 0;
 		
+		/*
 		file = "file/labyrinthe2.txt";
 		m.initFromTextFile(file);
 		PreviousInterface d = Dijkstra.dijkstra(m, m.getStart());
@@ -56,7 +59,7 @@ public class MazeModel extends Observable {
 			int[] tab = {m.getI(),m.getJ()};
 			dijkstra.add(tab);
 		}
-		
+		*/
 	}
 	
 	
@@ -103,6 +106,9 @@ public class MazeModel extends Observable {
 	public ArrayList<int[]> getDijkstra(){
 		return dijkstra;
 	}
+	public int getSpeed(){
+		return speed;
+	}
 	
 	
 	public void changeFile(String f){
@@ -118,6 +124,12 @@ public class MazeModel extends Observable {
 	
 	public void setEditable(boolean b){
 		editable = b;
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	public void setSpeed(int n){
+		speed = n;
 		this.setChanged();
 		this.notifyObservers();
 	}

@@ -32,6 +32,7 @@ public class MenuBar extends JMenuBar {
 	
 
     public void notifyForUpdate(){
+    	//possible car un menu implémente une méthode notifyforUpdate
     	for (int i=0; i<this.getMenuCount();i++){
     		((Menu)this.getMenu(i)).notifyForUpdate();
     	}

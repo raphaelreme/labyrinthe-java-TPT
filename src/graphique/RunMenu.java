@@ -2,6 +2,7 @@ package graphique;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
@@ -35,11 +36,21 @@ public class RunMenu extends Menu{
 		JRadioButtonMenuItem v3 = new JRadioButtonMenuItem("3");
 		JRadioButtonMenuItem v4 = new JRadioButtonMenuItem("Instant");
 		
+		ActionListener al = new SpeedListener();
+		v1.addActionListener(al);
+		v2.addActionListener(al);
+		v3.addActionListener(al);
+		v4.addActionListener(al);
+		
+		
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(v1);
 		bg.add(v2);
 		bg.add(v3);
 		bg.add(v4);
+		
+		//on selection Instant au début (vitesse initialisée à 0 dans le modele <=> Instant)
+		v4.setSelected(true);
 		
 		speed.add(v1);
 		speed.add(v2);
@@ -56,12 +67,22 @@ public class RunMenu extends Menu{
 	}
 	
 	
+	
+	
+	
 	private class SpeedListener implements ActionListener{
 
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
+		public void actionPerformed(ActionEvent e) {
+			ArrayList<String> tab = new ArrayList<String>();
+			tab.add("Instant");
+			tab.add("1");
+			tab.add("2");
+			tab.add("3");
 			
+			int i = tab.indexOf(((JRadioButtonMenuItem)e.getSource()).getText());
+			mainWindow.getModel().setSpeed(i);
+			System.out.println(i);
 		}
 		
 	}
