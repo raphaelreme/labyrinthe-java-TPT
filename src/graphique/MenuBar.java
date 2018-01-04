@@ -23,6 +23,8 @@ public class MenuBar extends JMenuBar {
 	public MenuBar(Frame window){
 		mainWindow = window;
 		initFileMenu();
+		initEditMenu();
+		initRunMenu();
 	}
 	
 	public void initFileMenu(){
@@ -73,7 +75,22 @@ public class MenuBar extends JMenuBar {
 		this.add(file);
 	}
 
+	public void initEditMenu(){
+		JMenu edit = new JMenu("Edit");
+
+
+		this.add(edit);
+	}
+
+	public void initRunMenu(){
+		JMenu run = new JMenu("Run");
+
+
+		this.add(run);
+	}
+
     public void notifyForUpdate(){
+
 	}
 
 
