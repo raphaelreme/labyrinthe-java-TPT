@@ -73,6 +73,8 @@ public class MenuBar extends JMenuBar {
 		this.add(file);
 	}
 
+    public void notifyForUpdate(){
+	}
 
 
 

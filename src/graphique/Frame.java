@@ -41,7 +41,12 @@ public class Frame extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		contentPanel.notifyForUpdate();		
+		contentPanel.notifyForUpdate();
+		menuBar.notifyForUpdate();
+		//Rajout du nom de fichier courant au titre
+		if (model.getFile()!=null){
+			this.setTitle("Maze - " + model.getFile().substring(model.getFile().lastIndexOf("\\") + 1));
+		}
 	}
 	
 	public MazeModel getModel(){
