@@ -83,7 +83,7 @@ public class MenuBar extends JMenuBar {
 		editable = new JMenuItem("Edit : Disabled");
 		editable.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				mainWindow.getModel().setEditable(!mainWindow.getModel().getEditable());
+				mainWindow.getModel().setEditable(!mainWindow.getModel().isEditable());
 			}
 		});
 
@@ -100,7 +100,7 @@ public class MenuBar extends JMenuBar {
 	}
 
     public void notifyForUpdate(){
-		if (mainWindow.getModel().getEditable()){
+		if (mainWindow.getModel().isEditable()){
 			editable.setText("Edit : Enabled");
 		}else{
 			editable.setText("Edit : Disabled");
