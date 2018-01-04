@@ -18,22 +18,30 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MenuBar extends JMenuBar {
 
 	private static final long serialVersionUID = 1L;
+	//à supprimer
 	private Frame mainWindow;
 
-	private JMenuItem editable;
+	private EditMenu edit;
 	
 	public MenuBar(Frame window){
 		mainWindow = window;
 		initFileMenu();
-		initEditMenu();
-		initRunMenu();
+		
+		//quand les classes seront implémentées :
+		//this.add(new FileMenu(window));
+		edit = new EditMenu(window);
+		this.add(edit);	
+		this.add(new RunMenu(window));
+		
+		/*
+		 * à modifer : Passage par le contrôleur dans les actionListeners des menuItems
+		 */		
 	}
 	
+	//à sup
 	public void initFileMenu(){
 		JMenu file = new JMenu("File");
-		/*
-		 * à modifer : Passage par le contrôleur !
-		 */
+		
 		JMenuItem quit = new JMenuItem("Quit");
 		quit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -77,39 +85,18 @@ public class MenuBar extends JMenuBar {
 		this.add(file);
 	}
 
-	public void initEditMenu(){
-		JMenu edit = new JMenu("Edit");
-
-		editable = new JMenuItem("Edit : Disabled");
-		editable.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				mainWindow.getModel().setEditable(!mainWindow.getModel().isEditable());
-			}
-		});
-
-		edit.add(editable);
-
-		this.add(edit);
-	}
-
-	public void initRunMenu(){
-		JMenu run = new JMenu("Run");
-
-
-		this.add(run);
-	}
+	
 
     public void notifyForUpdate(){
-		if (mainWindow.getModel().isEditable()){
-			editable.setText("Edit : Enabled");
-		}else{
-			editable.setText("Edit : Disabled");
-		}
-
+    	//Ne fonctionne pas encore !
+    	for (int i=0; i<this.getMenuCount();i++){
+    		((Menu)this.getMenu(i)).notifyForUpdate();
+    	}
 	}
 
 
 
+    //à sup
 	private class SaveMenuItemListener implements ActionListener {
 
 		@Override
