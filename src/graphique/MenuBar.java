@@ -22,10 +22,10 @@ public class MenuBar extends JMenuBar {
 	
 	public MenuBar(Frame window){
 		mainWindow = window;
-		initMenuFile();
+		initFileMenu();
 	}
 	
-	public void initMenuFile(){
+	public void initFileMenu(){
 		JMenu file = new JMenu("File");
 		/*
 		 * à modifer : Passage par le contrôleur !
@@ -62,27 +62,57 @@ public class MenuBar extends JMenuBar {
 		});
 		
 		JMenuItem save = new JMenuItem("Save");
-		save.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				JFileChooser fc = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Texte","txt");
-				fc.setCurrentDirectory(new File("file"));
-				fc.setFileFilter(filter);
-				int returnVal = fc.showSaveDialog(mainWindow);
-				if (returnVal == JFileChooser.APPROVE_OPTION){
-					File file = fc.getSelectedFile();
-					mainWindow.getModel().getM().saveToTextFile(file.getPath());
-				}
-			}
-		});
+		save.addActionListener(new SaveMenuItemListener());
 		
 		
 		file.add(_new);
 		file.add(op);
 		file.add(save);
-		//file.add(new JMenuItem("Save"));
 		file.add(quit);
 		
 		this.add(file);
 	}
+
+
+
+
+	private class SaveMenuItemListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			JFileChooser fc = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Texte","txt");
+			fc.setCurrentDirectory(new File("file"));
+			fc.setFileFilter(filter);
+			fc.setAcceptAllFileFilterUsed(false);
+			if (mainWindow.getModel().getFile()!=null){
+				fc.setSelectedFile(new File("File\\"+mainWindow.getModel().getFile()));
+			}
+
+			showDialog(fc);
+		}
+
+		public void showDialog(JFileChooser fc){
+			int returnVal = fc.showSaveDialog(mainWindow);
+			if (returnVal != 0){
+				return;
+			}
+			File f = fc.getSelectedFile();
+			String name = f.getName();
+
+			//Verif qu'on enregistre bien un .txt
+			if (!name.contains(".")){
+				mainWindow.getModel().getM().saveToTextFile(f.getPath()+".txt");
+				return;
+			}
+
+			if (name.substring(name.length()-4).equals(".txt")){
+				mainWindow.getModel().getM().saveToTextFile(f.getPath());
+				return;
+			}
+			//sinon on recommence
+			showDialog(fc);
+		}
+	}
+
 }
