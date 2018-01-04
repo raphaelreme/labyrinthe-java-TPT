@@ -19,6 +19,8 @@ public class MenuBar extends JMenuBar {
 
 	private static final long serialVersionUID = 1L;
 	private Frame mainWindow;
+
+	private JMenuItem editable;
 	
 	public MenuBar(Frame window){
 		mainWindow = window;
@@ -78,6 +80,14 @@ public class MenuBar extends JMenuBar {
 	public void initEditMenu(){
 		JMenu edit = new JMenu("Edit");
 
+		editable = new JMenuItem("Edit : Disabled");
+		editable.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				mainWindow.getModel().setEditable(!mainWindow.getModel().getEditable());
+			}
+		});
+
+		edit.add(editable);
 
 		this.add(edit);
 	}
@@ -90,6 +100,11 @@ public class MenuBar extends JMenuBar {
 	}
 
     public void notifyForUpdate(){
+		if (mainWindow.getModel().getEditable()){
+			editable.setText("Edit : Enabled");
+		}else{
+			editable.setText("Edit : Disabled");
+		}
 
 	}
 
