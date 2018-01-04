@@ -17,8 +17,13 @@ public class MazeModel extends Observable {
 	private Image wall;
 	private Image start;
 	private Image arrival;
-	private Maze m= new Maze();
+	private boolean editable;
+	private boolean saved;
+	
 	private String file;
+	private Maze m= new Maze();
+	
+	
 	
 	public MazeModel(){
 		/*
@@ -28,6 +33,8 @@ public class MazeModel extends Observable {
 		arrival = loadImage("arrivee.png");
 		background = loadImage("fond.jpg");
 		wall = loadImage("mur.png");
+		editable = false;
+		saved = false;
 		
 		file = null;	
 	}
@@ -61,6 +68,12 @@ public class MazeModel extends Observable {
 	public Image getArrival() {
 		return arrival;
 	}
+	public boolean isEditable(){
+		return editable;
+	}
+	public boolean isSaved(){
+		return saved;
+	}
 	public Maze getM() {
 		return m;
 	}
@@ -76,6 +89,12 @@ public class MazeModel extends Observable {
 	
 	public void initMaze(){
 		m.initFromTextFile(file);
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	public void setEditable(boolean b){
+		editable = b;
 		this.setChanged();
 		this.notifyObservers();
 	}
