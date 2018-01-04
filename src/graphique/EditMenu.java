@@ -41,6 +41,5 @@ public class EditMenu extends Menu{
 		}else{
 			editable.setText("Edit : Disabled");
 		}
-		System.out.println("update edit");
 	}
 }
