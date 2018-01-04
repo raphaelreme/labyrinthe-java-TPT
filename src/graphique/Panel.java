@@ -1,6 +1,7 @@
 package graphique;
 
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -40,8 +41,8 @@ public class Panel extends JPanel{
 		 * dimension d'une case du labyrinthe 
 		 * floatant pour mieux s'adapter à la taille du panel
 		*/
-		float boxHeight = this.getHeight()/(float)l;
-		float boxWidth = this.getWidth()/(float)w;
+		boxHeight = this.getHeight()/(float)l;
+		boxWidth = this.getWidth()/(float)w;
 		
 		for (int i=0; i<l; i++){
 			for (int j=0; j<w; j++){
@@ -63,12 +64,16 @@ public class Panel extends JPanel{
 			}
 		}
 		
-		//if model
+		
 		drawDijkstra(g);
 	}
 	
 	public void drawDijkstra(Graphics g){
-		
+		g.setColor(Color.RED);
+		for (int[] tab:mainWindow.getModel().getDijkstra()){
+			int i = tab[0], j = tab[1];
+			g.fillOval((int)(j*boxWidth), (int)(i*boxHeight), (int)boxWidth, (int)boxHeight);
+		}
 	}
 	
 	public void notifyForUpdate(){

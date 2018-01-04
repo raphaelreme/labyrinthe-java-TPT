@@ -1,14 +1,19 @@
 package modele;
 
 import graphique.Frame;
+import interfaces.PreviousInterface;
+import interfaces.VertexInterface;
 
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
 
 import javax.imageio.ImageIO;
 
+import box.MBox;
+import dijkstra.Dijkstra;
 import dijkstra.Maze;
 
 public class MazeModel extends Observable {
@@ -22,6 +27,7 @@ public class MazeModel extends Observable {
 	
 	private String file;
 	private Maze m= new Maze();
+	private ArrayList<int[]> dijkstra;
 	
 	
 	
@@ -36,7 +42,21 @@ public class MazeModel extends Observable {
 		editable = false;
 		saved = false;
 		
-		file = null;	
+		file = null;
+		dijkstra = new ArrayList<int[]>();
+		
+		file = "file/labyrinthe2.txt";
+		m.initFromTextFile(file);
+		PreviousInterface d = Dijkstra.dijkstra(m, m.getStart());
+		VertexInterface v = m.getEnd();
+		
+		while (d.getPrev(v) != m.getStart()){
+			v = d.getPrev(v);
+			MBox m = (MBox)v;
+			int[] tab = {m.getI(),m.getJ()};
+			dijkstra.add(tab);
+		}
+		
 	}
 	
 	
@@ -79,6 +99,9 @@ public class MazeModel extends Observable {
 	}
 	public String getFile() {
 		return file;
+	}
+	public ArrayList<int[]> getDijkstra(){
+		return dijkstra;
 	}
 	
 	
