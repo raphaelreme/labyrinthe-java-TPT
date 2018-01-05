@@ -20,6 +20,8 @@ public class Maze implements GraphInterface {
 	
 	private int length;
 	private int width;
+	
+	//deux modeles en parallèle pour une question de performances dans l'algo de dijkstra et de commodité pour représenter un labyrinthe
 	private ArrayList<ArrayList<MBox>> matrice;
 	private ArrayList<VertexInterface> listeSommets;
 	
@@ -53,10 +55,12 @@ public class Maze implements GraphInterface {
 	}
 	
 	public ArrayList<VertexInterface> getVertices() {
+		//performances ici : ne pas avoir à retranscrire la matrice en liste à chaque appel !
 		return listeSommets;
 	}
 
-	public ArrayList<VertexInterface> getNext(VertexInterface v) {
+	//dans les 3 fonctions qui suivent il est plus pratique d'avoir une matrice plutot qu'une grosse liste, d'où la modélisation double
+	public ArrayList<VertexInterface> getNext(VertexInterface v) {	
 		MBox box = (MBox) v;
 		int i = box.getI();
 		int j = box.getJ();

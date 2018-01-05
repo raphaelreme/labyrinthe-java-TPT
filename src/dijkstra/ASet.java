@@ -8,7 +8,7 @@ import interfaces.VertexInterface;
 public class ASet implements ASetInterface {
 	
 	private HashSet<VertexInterface> set = new HashSet<VertexInterface>();
-
+	
 	public boolean isIn(VertexInterface v) {
 		return set.contains(v);
 	}

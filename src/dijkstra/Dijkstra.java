@@ -52,7 +52,7 @@ public class Dijkstra {
 		
 	}
 	
-	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r){
-		return dijkstra(g,r,new ASet(),new Pi(),new Previous());
+	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a){
+		return dijkstra(g,r,a,new Pi(),new Previous());
 	}
 }
