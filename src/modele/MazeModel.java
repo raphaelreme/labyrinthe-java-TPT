@@ -16,7 +16,12 @@ import box.MBox;
 import dijkstra.ASetWithOrder;
 import dijkstra.Dijkstra;
 import dijkstra.Maze;
+import exception.MazeReadingException;
 
+/*
+ * Contient les données du projet.
+ * Permet la modification des données et prévient la Frame qui elle-même transmet le message à ses composants)
+ */
 public class MazeModel extends Observable {
 
 	private Image background;
@@ -26,13 +31,12 @@ public class MazeModel extends Observable {
 	private boolean editable;
 	private boolean saved;
 	
-	private String file;
+	private File file;
 	private Maze m= new Maze();
 	private ArrayList<int[]> dijkstra;
 	private int speed;
 	
-	
-	
+
 	public MazeModel(){
 		/*
 		 * Les images ne sont chargées qu'une seule fois : ici. Cela permet de modifier les noms des fichiers facilement.
@@ -101,7 +105,7 @@ public class MazeModel extends Observable {
 	public Maze getM() {
 		return m;
 	}
-	public String getFile() {
+	public File getFile() {
 		return file;
 	}
 	public ArrayList<int[]> getDijkstra(){
@@ -112,25 +116,28 @@ public class MazeModel extends Observable {
 	}
 	
 	
-	public void changeFile(String f){
-		file = f;
-		initMaze();
-	}
-	
-	public void initMaze(){
-		m.initFromTextFile(file);
-		this.setChanged();
-		this.notifyObservers();
-	}
-	
+	//Setters
 	public void setEditable(boolean b){
 		editable = b;
-		this.setChanged();
-		this.notifyObservers();
-	}
-	
+	}	
+	public void setFile(File f) throws MazeReadingException{
+		//on essaye d'abord d'initialiser le maze avant de changer le fichier
+		m.initFromTextFile(f); 
+		file = f;
+	}	
 	public void setSpeed(int n){
 		speed = n;
+	}
+	
+	
+	
+	public void save(File f){
+		m.saveToTextFile(f);
+	}
+	
+	
+	
+	public void refresh(){
 		this.setChanged();
 		this.notifyObservers();
 	}

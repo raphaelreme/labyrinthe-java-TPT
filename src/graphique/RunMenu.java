@@ -2,11 +2,11 @@ package graphique;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
 public class RunMenu extends Menu{
@@ -14,6 +14,7 @@ public class RunMenu extends Menu{
 	private static final long serialVersionUID = 1L;
 	
 	private JMenuItem run;
+	private JRadioButtonMenuItem selectedSpeed;
 
 	public RunMenu(Frame window) {
 		super("Run", window);
@@ -51,6 +52,7 @@ public class RunMenu extends Menu{
 		
 		//on selection Instant au début (vitesse initialisée à 0 dans le modele <=> Instant)
 		v4.setSelected(true);
+		selectedSpeed = v4;
 		
 		speed.add(v1);
 		speed.add(v2);
@@ -74,15 +76,15 @@ public class RunMenu extends Menu{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ArrayList<String> tab = new ArrayList<String>();
-			tab.add("Instant");
-			tab.add("1");
-			tab.add("2");
-			tab.add("3");
+			int r =mainWindow.getController().setSpeed(((JRadioButtonMenuItem)e.getSource()).getText());
 			
-			int i = tab.indexOf(((JRadioButtonMenuItem)e.getSource()).getText());
-			mainWindow.getModel().setSpeed(i);
-			System.out.println(i);
+			if (r == -1){
+				JOptionPane.showMessageDialog(mainWindow,"Changement de vitesse invalide","Erreur",JOptionPane.ERROR_MESSAGE);
+				selectedSpeed.setSelected(true); //On reselectionne le bon bouton
+			} else if (r == 0){
+				selectedSpeed = (JRadioButtonMenuItem)e.getSource();
+			}
+			
 		}
 		
 	}

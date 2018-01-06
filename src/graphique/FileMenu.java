@@ -6,6 +6,7 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FileMenu extends Menu{
@@ -33,7 +34,7 @@ public class FileMenu extends Menu{
          */
         _new.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                mainWindow.getModel().changeFile(null);
+                mainWindow.getController().setFile(null);
             }
         });
 
@@ -43,29 +44,14 @@ public class FileMenu extends Menu{
 
     private void initOpen(){
         JMenuItem op = new JMenuItem("Open");
-
-        op.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                JFileChooser fc = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Texte","txt");
-                fc.setCurrentDirectory(new File("file"));
-                fc.setFileFilter(filter);
-                fc.setAcceptAllFileFilterUsed(false);
-                int returnVal = fc.showOpenDialog(mainWindow);
-                if (returnVal == JFileChooser.APPROVE_OPTION){
-                    File file = fc.getSelectedFile();
-                    mainWindow.getModel().changeFile(file.getPath());
-                }
-
-            }
-        });
+        op.addActionListener(new OpenListener());
 
         this.add(op);
     }
 
     private void initSave(){
         JMenuItem save = new JMenuItem("Save");
-        save.addActionListener(new SaveMenuItemListener());
+        save.addActionListener(new SaveListener());
 
         this.add(save);
     }
@@ -86,8 +72,37 @@ public class FileMenu extends Menu{
 
 
 
+    private class OpenListener implements ActionListener {
 
-    private class SaveMenuItemListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+            JFileChooser fc = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Texte","txt");
+            fc.setCurrentDirectory(new File("file"));
+            fc.setFileFilter(filter);
+            fc.setAcceptAllFileFilterUsed(false);
+            
+            showDialog(fc);
+		}
+		
+		public void showDialog(JFileChooser fc){
+			int returnVal = fc.showOpenDialog(mainWindow);
+			if (returnVal != 0){
+                return;
+			}
+			
+			int r = mainWindow.getController().setFile(fc.getSelectedFile());
+			if (r==-1){
+				JOptionPane.showMessageDialog(mainWindow,"Fichier inexistant","Erreur",JOptionPane.ERROR_MESSAGE);
+				showDialog(fc);//fichier inexistant on demande de nouveau à ouvrir un fichier
+			} else if (r == 1){
+				JOptionPane.showMessageDialog(mainWindow,"Fichier invalide","Erreur",JOptionPane.ERROR_MESSAGE);
+				showDialog(fc);//fichier invalide on demande de nouveau à ouvrir un fichier
+			}
+		}
+    }
+
+    private class SaveListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
@@ -108,21 +123,11 @@ public class FileMenu extends Menu{
             if (returnVal != 0){
                 return;
             }
-            File f = fc.getSelectedFile();
-            String name = f.getName();
-
-            //Verif qu'on enregistre bien un .txt
-            if (!name.contains(".")){
-                mainWindow.getModel().getM().saveToTextFile(f.getPath()+".txt");
-                return;
+            
+            int r = mainWindow.getController().save(fc.getSelectedFile());
+            if (r == -1){
+            	showDialog(fc); //Le format n'est pas valide, on recomence
             }
-
-            if (name.substring(name.length()-4).equals(".txt")){
-                mainWindow.getModel().getM().saveToTextFile(f.getPath());
-                return;
-            }
-            //sinon on recommence
-            showDialog(fc);
         }
     }
 }

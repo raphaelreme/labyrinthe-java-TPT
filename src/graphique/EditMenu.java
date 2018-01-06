@@ -23,7 +23,7 @@ public class EditMenu extends Menu{
 		editable = new JMenuItem("Edit : Disabled");
 		editable.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				mainWindow.getModel().setEditable(!mainWindow.getModel().isEditable());
+				mainWindow.getController().setEditable();
 			}
 		});
 		this.add(editable);

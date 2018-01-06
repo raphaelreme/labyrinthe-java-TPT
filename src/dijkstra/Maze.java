@@ -1,5 +1,6 @@
 package dijkstra;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -88,28 +89,28 @@ public class Maze implements GraphInterface {
 	 * Crée le maze à partir d'un fichier texte
 	 * Si le pointeur passé en parametre est null, le maze est réinitialisé
 	 */
-	public final void initFromTextFile(String fileName){
-		
-		if (fileName == null){
+	public final void initFromTextFile(File file) throws MazeReadingException{
+		if (file == null){
 			length = 0;
 			width = 0;
 			matrice = null;
 			listeSommets = null;
 			return;
 		}
+		
 		BufferedReader text = null;
 		try{
-			text = new BufferedReader(new FileReader(fileName));
+			text = new BufferedReader(new FileReader(file));
 			this.matrice = new ArrayList<ArrayList<MBox>>();
 			this.listeSommets = new ArrayList<VertexInterface>();
 			
 			String ligne = text.readLine();
 			if (ligne == null) {
-				throw new MazeReadingException(fileName,-1,"Fichier vide");
+				throw new MazeReadingException(file.getName(),-1,"Empty file");
 			}
 			final int m = ligne.length();
 			if (m == 0){
-				throw new MazeReadingException(fileName,0,"ligne vide");
+				throw new MazeReadingException(file.getName(),0,"Empty ligne");
 			}
 			
 			int i = 0;
@@ -117,7 +118,7 @@ public class Maze implements GraphInterface {
 			
 			while (ligne != null) {
 				if (m!=ligne.length()) {
-					throw new MazeReadingException(fileName,i,"Largeur inégale");
+					throw new MazeReadingException(file.getName(),i,"Different width");
 				}
 				ArrayList<MBox> tmp = new ArrayList<MBox>(m);
 				for (int j=0; j<m; j++){
@@ -139,7 +140,7 @@ public class Maze implements GraphInterface {
 						tmp.add(b);
 						listeSommets.add(b);
 					} else {
-						throw new MazeReadingException(fileName,i,"Lettre invalide");
+						throw new MazeReadingException(file.getName(),i,"Invalide letter");
 					}
 				}
 				matrice.add(tmp);
@@ -155,10 +156,6 @@ public class Maze implements GraphInterface {
 		} catch (IOException e){
 			e.printStackTrace();
 			System.exit(0);
-		}  catch (MazeReadingException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			System.exit(0);
 		} finally {
 			try {text.close();}
 			catch (Exception e) {}
@@ -166,10 +163,10 @@ public class Maze implements GraphInterface {
 		
 	}
 	
-	public final void saveToTextFile(String Name){
+	public final void saveToTextFile(File file){
 		PrintWriter pw = null;
 		try {
-			pw = new PrintWriter(Name);
+			pw = new PrintWriter(file);
 			for (ArrayList<MBox> ligne : matrice){
 				String chaine = "";
 				for (MBox box : ligne){

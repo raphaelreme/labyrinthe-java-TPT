@@ -15,8 +15,8 @@ public class Main {
 		MazeController c = new MazeController(m);
 		
 		Frame f = new Frame(m,c);
-
-
+		
+		
 	}
 
 }

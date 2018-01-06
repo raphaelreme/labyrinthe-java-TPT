@@ -48,9 +48,10 @@ public class Frame extends JFrame implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		contentPanel.notifyForUpdate();
 		menuBar.notifyForUpdate();
+		
 		//Rajout du nom de fichier courant au titre
 		if (model.getFile()!=null){
-			this.setTitle("Maze - " + model.getFile().substring(model.getFile().lastIndexOf("\\") + 1));
+			this.setTitle("Maze - " + model.getFile().getName());
 		} else {
 			this.setTitle("Maze");
 		}
@@ -58,6 +59,10 @@ public class Frame extends JFrame implements Observer {
 	
 	public MazeModel getModel(){
 		return model;
+	}
+	
+	public MazeController getController(){
+		return controller;
 	}
 	
 }
