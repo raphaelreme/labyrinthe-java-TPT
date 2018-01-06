@@ -13,6 +13,7 @@ import java.util.Observable;
 import javax.imageio.ImageIO;
 
 import box.MBox;
+import dijkstra.ASetWithOrder;
 import dijkstra.Dijkstra;
 import dijkstra.Maze;
 
@@ -50,7 +51,7 @@ public class MazeModel extends Observable {
 		/*
 		file = "file/labyrinthe2.txt";
 		m.initFromTextFile(file);
-		PreviousInterface d = Dijkstra.dijkstra(m, m.getStart());
+		PreviousInterface d = Dijkstra.dijkstra(m, m.getStart(),new ASetWithOrder());
 		VertexInterface v = m.getEnd();
 		
 		while (d.getPrev(v) != m.getStart()){

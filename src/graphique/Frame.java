@@ -7,18 +7,23 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
+import controller.MazeController;
 import modele.MazeModel;
 
 public class Frame extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
-	MazeModel model = new MazeModel();
+	MazeModel model;
+	MazeController controller;
 	
 	Panel contentPanel;
 	MenuBar menuBar;
 
 
-	public Frame(){
+	public Frame(MazeModel model, MazeController controller){
+		this.model = model;
+		this.controller = controller;
+		
 		this.setTitle("Maze");
 		this.setIconImage(model.getStart());
 		this.setSize(500,500);
@@ -46,6 +51,8 @@ public class Frame extends JFrame implements Observer {
 		//Rajout du nom de fichier courant au titre
 		if (model.getFile()!=null){
 			this.setTitle("Maze - " + model.getFile().substring(model.getFile().lastIndexOf("\\") + 1));
+		} else {
+			this.setTitle("Maze");
 		}
 	}
 	
