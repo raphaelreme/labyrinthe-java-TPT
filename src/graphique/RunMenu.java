@@ -26,6 +26,12 @@ public class RunMenu extends Menu{
 	public void initRun(){
 		run = new JMenuItem("Run");
 		
+		run.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				mainWindow.getController().run();
+			}
+		});
+		
 		this.add(run);
 	}
 	
@@ -65,7 +71,7 @@ public class RunMenu extends Menu{
 	
 	public void notifyForUpdate(){
 		//On ne peut pas run l'algo si on peut modifier le labyrinthe
-		run.setEnabled(!mainWindow.getModel().isEditable());
+		run.setEnabled(mainWindow.getModel().isRunnable());
 	}
 	
 	

@@ -29,14 +29,14 @@ public class Panel extends JPanel{
 	
 	public void paintComponent(Graphics g){
 		g.drawImage(mainWindow.getModel().getBackground(), 0, 0 , this.getWidth(), this.getHeight(),this);
-		if (mainWindow.getModel().getM().getLength() != 0) //si il y a un labyrinthe 
+		if (mainWindow.getModel().getMaze().getLength() != 0) //si il y a un labyrinthe 
 			drawMaze(g);
 	}
 	
 	protected void drawMaze(Graphics g){
 		
-		int l = mainWindow.getModel().getM().getLength();
-		int w = mainWindow.getModel().getM().getWidth();
+		int l = mainWindow.getModel().getMaze().getLength();
+		int w = mainWindow.getModel().getMaze().getWidth();
 		/*
 		 * dimension d'une case du labyrinthe 
 		 * floatant pour mieux s'adapter à la taille du panel
@@ -46,7 +46,7 @@ public class Panel extends JPanel{
 		
 		for (int i=0; i<l; i++){
 			for (int j=0; j<w; j++){
-				String charIJ = mainWindow.getModel().getM().getLetter(i,j);
+				String charIJ = mainWindow.getModel().getMaze().getLetter(i,j);
 				Image img = null;
 				if (charIJ == "W"){
 					img = mainWindow.getModel().getWall();

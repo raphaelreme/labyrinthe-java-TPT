@@ -1,8 +1,14 @@
 package controller;
 
+import interfaces.PreviousInterface;
+import interfaces.VertexInterface;
+
 import java.io.File;
 import java.util.ArrayList;
 
+import box.MBox;
+import dijkstra.ASetWithOrder;
+import dijkstra.Dijkstra;
 import exception.MazeReadingException;
 import modele.MazeModel;
 
@@ -13,6 +19,7 @@ import modele.MazeModel;
 public class MazeController {
 
 	private MazeModel model;
+	private DijkstraThread dijkstraThread;
 	
 	public MazeController(MazeModel m){
 		this.model = m;
@@ -77,11 +84,6 @@ public class MazeController {
 	
 	
 	
-	
-	
-	
-	
-	
 	//EditMenu
 	public int setEditable(){
 		model.setEditable(!model.isEditable());
@@ -90,11 +92,22 @@ public class MazeController {
 	}
 	
 	
-	
-	
-	
+		
 	
 	//RunMenu
+	public int run(){
+		if (dijkstraThread != null){
+			dijkstraThread.stopThread();
+		}
+		
+		dijkstraThread = new DijkstraThread(model);
+		Thread t = new Thread(dijkstraThread);
+		t.setName("DijkstraThread");
+		t.start();
+		
+		return 0;
+	}
+	
 	public int setSpeed(String s){
 		ArrayList<String> tab = new ArrayList<String>();
 		tab.add("Instant");
@@ -112,5 +125,5 @@ public class MazeController {
 		return -1; //En cas d'erreur
 	}
 	
-    
+
 }

@@ -28,11 +28,13 @@ public class MazeModel extends Observable {
 	private Image wall;
 	private Image start;
 	private Image arrival;
+	
+	private boolean runnable;
 	private boolean editable;
 	private boolean saved;
 	
 	private File file;
-	private Maze m= new Maze();
+	private Maze maze = new Maze();
 	private ArrayList<int[]> dijkstra;
 	private int speed;
 	
@@ -45,26 +47,14 @@ public class MazeModel extends Observable {
 		arrival = loadImage("arrivee.png");
 		background = loadImage("fond.jpg");
 		wall = loadImage("mur.png");
+		
+		runnable = true;
 		editable = false;
 		saved = false;
 		
 		file = null;
 		dijkstra = new ArrayList<int[]>();
 		speed = 0;
-		
-		/*
-		file = "file/labyrinthe2.txt";
-		m.initFromTextFile(file);
-		PreviousInterface d = Dijkstra.dijkstra(m, m.getStart(),new ASetWithOrder());
-		VertexInterface v = m.getEnd();
-		
-		while (d.getPrev(v) != m.getStart()){
-			v = d.getPrev(v);
-			MBox m = (MBox)v;
-			int[] tab = {m.getI(),m.getJ()};
-			dijkstra.add(tab);
-		}
-		*/
 	}
 	
 	
@@ -96,14 +86,17 @@ public class MazeModel extends Observable {
 	public Image getArrival() {
 		return arrival;
 	}
+	public boolean isRunnable(){
+		return runnable;
+	}
 	public boolean isEditable(){
 		return editable;
 	}
 	public boolean isSaved(){
 		return saved;
 	}
-	public Maze getM() {
-		return m;
+	public Maze getMaze() {
+		return maze;
 	}
 	public File getFile() {
 		return file;
@@ -117,22 +110,31 @@ public class MazeModel extends Observable {
 	
 	
 	//Setters
+	public void setRunnable(boolean b){
+		runnable = b;
+	}
 	public void setEditable(boolean b){
 		editable = b;
-	}	
+	}
 	public void setFile(File f) throws MazeReadingException{
 		//on essaye d'abord d'initialiser le maze avant de changer le fichier
-		m.initFromTextFile(f); 
+		maze.initFromTextFile(f); 
 		file = f;
 	}	
 	public void setSpeed(int n){
 		speed = n;
 	}
+	public void resetDijkstra(){
+		dijkstra = new ArrayList<int[]>();
+	}
+	public void addDijkstra(int[] t){
+		dijkstra.add(t);
+	}
 	
 	
 	
 	public void save(File f){
-		m.saveToTextFile(f);
+		maze.saveToTextFile(f);
 	}
 	
 	
