@@ -35,6 +35,11 @@ public class MazeController {
 			} catch (MazeReadingException e) {
 				e.printStackTrace();
 			}
+			
+			if (dijkstraThread != null){
+				dijkstraThread.stopThread();
+			}
+			model.resetDijkstra();
 			model.refresh();
 			return 0;
 		}
@@ -47,10 +52,16 @@ public class MazeController {
 				try {
 					//On remet le fichier précendent en place.
 					model.setFile(model.getFile()); // Le fichier précédent était valide, cela ne lève pas d'exception
-				} catch (MazeReadingException e1) {	}
+				} catch (MazeReadingException e1) {	
+					
+				}
 				return 1;
 			}
 			
+			if (dijkstraThread != null){
+				dijkstraThread.stopThread();
+			}
+			model.resetDijkstra();
 			model.refresh();
 			return 0;
 		}
@@ -105,6 +116,14 @@ public class MazeController {
 		t.setName("DijkstraThread");
 		t.start();
 		
+		return 0;
+	}
+	
+	
+	public int stop(){
+		if (dijkstraThread != null){
+			dijkstraThread.stopThread();
+		}
 		return 0;
 	}
 	

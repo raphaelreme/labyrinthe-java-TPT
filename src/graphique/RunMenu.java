@@ -19,7 +19,9 @@ public class RunMenu extends Menu{
 	public RunMenu(Frame window) {
 		super("Run", window);
 		initRun();
+		initStop();
 		initSpeed();
+		
 	}
 	
 	
@@ -34,6 +36,19 @@ public class RunMenu extends Menu{
 		
 		this.add(run);
 	}
+	
+	public void initStop(){
+		JMenuItem stop = new JMenuItem("Stop");
+		
+		stop.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				mainWindow.getController().stop();
+			}
+		});
+		
+		this.add(stop);
+	}
+	
 	
 	public void initSpeed(){
 		JMenu speed = new JMenu("Speed");
