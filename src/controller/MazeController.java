@@ -104,6 +104,10 @@ public class MazeController {
 	
 	//RunMenu
 	public int run(){
+		if (model.getMaze().getLength()==0){
+			return -1;
+		}
+		
 		if (dijkstraThread != null){
 			if (model.isPaused()) {
 				dijkstraThread.changePaused();

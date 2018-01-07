@@ -34,7 +34,11 @@ public class RunMenu extends Menu{
 		
 		run.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				mainWindow.getController().run();
+				int r = mainWindow.getController().run();
+				
+				if (r == -1){
+					JOptionPane.showMessageDialog(mainWindow,"Pas de Maze","Erreur",JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		
