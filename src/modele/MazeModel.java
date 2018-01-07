@@ -29,9 +29,10 @@ public class MazeModel extends Observable {
 	private Image start;
 	private Image arrival;
 	
-	private boolean runnable;
+	private boolean running;
 	private boolean editable;
 	private boolean saved;
+	private boolean paused;
 	
 	private File file;
 	private Maze maze = new Maze();
@@ -48,9 +49,10 @@ public class MazeModel extends Observable {
 		background = loadImage("fond.jpg");
 		wall = loadImage("mur.png");
 		
-		runnable = true;
+		running = false;
 		editable = false;
 		saved = false;
+		paused = false;
 		
 		file = null;
 		dijkstra = new ArrayList<int[]>();
@@ -86,14 +88,17 @@ public class MazeModel extends Observable {
 	public Image getArrival() {
 		return arrival;
 	}
-	public boolean isRunnable(){
-		return runnable;
+	public boolean isRunning(){
+		return running;
 	}
 	public boolean isEditable(){
 		return editable;
 	}
 	public boolean isSaved(){
 		return saved;
+	}
+	public boolean isPaused() {
+		return paused;
 	}
 	public Maze getMaze() {
 		return maze;
@@ -110,11 +115,14 @@ public class MazeModel extends Observable {
 	
 	
 	//Setters
-	public void setRunnable(boolean b){
-		runnable = b;
+	public void setRunning(boolean b){
+		running = b;
 	}
 	public void setEditable(boolean b){
 		editable = b;
+	}
+	public void setPaused(boolean b) {
+		paused = b;
 	}
 	public void setFile(File f) throws MazeReadingException{
 		//on essaye d'abord d'initialiser le maze avant de changer le fichier
@@ -143,12 +151,10 @@ public class MazeModel extends Observable {
 		this.setChanged();
 		this.notifyObservers();
 	}
-	
-	
 
 
 	
-	
+
 	
 	
 	

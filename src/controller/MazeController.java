@@ -1,20 +1,17 @@
 package controller;
 
-import interfaces.PreviousInterface;
-import interfaces.VertexInterface;
-
 import java.io.File;
 import java.util.ArrayList;
 
-import box.MBox;
-import dijkstra.ASetWithOrder;
-import dijkstra.Dijkstra;
 import exception.MazeReadingException;
 import modele.MazeModel;
 
 /*
  * Cette classe fait l'intermédiaire entre les events reçus et la modifications du modèle
  * Controle les données reçues et les traite avant de les envoyer au modèle
+ * 
+ * Chacune de ses fonctions renvoie un entier caractérisant le contrôle
+ * Si tout s'est bien passé elles renvoient 0
  */
 public class MazeController {
 
@@ -119,11 +116,26 @@ public class MazeController {
 		return 0;
 	}
 	
+	public int pause(){
+		if (dijkstraThread != null){
+			dijkstraThread.changePaused();
+		}
+		return 0;
+	}
 	
 	public int stop(){
 		if (dijkstraThread != null){
+			if (model.isPaused()){
+				dijkstraThread.changePaused();
+			}
 			dijkstraThread.stopThread();
 		}
+		return 0;
+	}
+	
+	public int clean(){
+		model.resetDijkstra();
+		model.refresh();
 		return 0;
 	}
 	
@@ -132,12 +144,18 @@ public class MazeController {
 		tab.add("Instant");
 		tab.add("1");
 		tab.add("2");
-		tab.add("3");
+		tab.add("5");
+		tab.add("10");
 		
 		int i = tab.indexOf(s);
 		
+		if (i == 0){
+			model.setSpeed(0);
+			model.refresh();
+			return 0;
+		}
 		if (i!=-1){
-			model.setSpeed(i);
+			model.setSpeed(new Integer(tab.get(i)).intValue());
 			model.refresh();
 			return 0;
 		}

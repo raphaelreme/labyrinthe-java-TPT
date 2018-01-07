@@ -16,6 +16,7 @@ class DijkstraThread implements Runnable{
 	
 	private MazeModel model;
 	private boolean runThread = true;
+	private boolean pauseThread = false;
 	
 	public DijkstraThread(MazeModel m){
 		model = m;
@@ -42,6 +43,7 @@ class DijkstraThread implements Runnable{
 			}
 		}
 		started();
+		pause();
 		
 		model.resetDijkstra();
 		
@@ -61,7 +63,7 @@ class DijkstraThread implements Runnable{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
+				pause();
 				if (!runThread) {stopped();return;}
 			}
 			
@@ -73,6 +75,7 @@ class DijkstraThread implements Runnable{
 				e.printStackTrace();
 			}
 		}
+		pause();
 		if (!runThread) {stopped();return;}
 		
 		//Affichage de la solution
@@ -83,20 +86,46 @@ class DijkstraThread implements Runnable{
 			model.addDijkstra(tab);
 			if (!runThread) {stopped();return;}
 		}
-		model.setRunnable(true);
-		model.refresh();
+		//model.refresh() dans le stopped.
 		stopped();
 	}
+	
+	
 	
 	//Permet l'arret du thread
 	public void stopThread(){
     	runThread = false;
     }
+	public void changePaused(){
+		pauseThread = !pauseThread;
+		model.setPaused(pauseThread);
+		model.refresh();
+	}
 	
-	private static void started(){
+	private synchronized void started(){
 		compteur +=1;
+		model.setRunning(true);
+		model.refresh();
 	}
-	private static void stopped(){
+	private void stopped(){
+		//on passe à faux avant de liberer le demarrage d'un autre DijkstraThread (compteur -=1)
+		model.setRunning(false);
 		compteur -=1;
+		model.refresh();
 	}
+	
+	/*
+	 * Met en pause le thread
+	 */
+	private void pause(){
+		while (pauseThread){
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 }
