@@ -105,6 +105,9 @@ public class MazeController {
 	//RunMenu
 	public int run(){
 		if (dijkstraThread != null){
+			if (model.isPaused()) {
+				dijkstraThread.changePaused();
+			}
 			dijkstraThread.stopThread();
 		}
 		

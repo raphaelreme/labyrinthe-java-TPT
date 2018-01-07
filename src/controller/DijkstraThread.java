@@ -34,7 +34,7 @@ class DijkstraThread implements Runnable{
 		PreviousInterface d = Dijkstra.dijkstra(model.getMaze(), model.getMaze().getStart(),a);
 		VertexInterface v = model.getMaze().getEnd();
 		
-		//On s'assure que le potentielle thread précédent s'est bien terminé avant de commencer !
+		//On s'assure que le potentiel thread précédent s'est bien terminé avant de commencer !
 		while (compteur != 0){
 			try {
 				Thread.sleep(100);
