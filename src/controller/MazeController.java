@@ -104,7 +104,7 @@ public class MazeController {
 	
 	//RunMenu
 	public int run(){
-		if (model.getMaze().getLength()==0){
+		if (!model.isValidMaze()){
 			return -1;
 		}
 		

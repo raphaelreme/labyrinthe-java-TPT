@@ -13,6 +13,7 @@ public class RunMenu extends Menu{
 	
 	private static final long serialVersionUID = 1L;
 	
+	private JMenuItem run;
 	private JMenuItem pause;
 	private JMenuItem stop;
 	private JMenuItem clean;
@@ -30,14 +31,14 @@ public class RunMenu extends Menu{
 	
 	
 	private void initRun(){
-		JMenuItem run = new JMenuItem("Run");
+		run = new JMenuItem("Run");
 		
 		run.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				int r = mainWindow.getController().run();
 				
 				if (r == -1){
-					JOptionPane.showMessageDialog(mainWindow,"Pas de Maze","Erreur",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(mainWindow,"Invalid maze","Erreur",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -124,6 +125,7 @@ public class RunMenu extends Menu{
 	public void notifyForUpdate(){
 		boolean b = mainWindow.getModel().isRunning();
 		
+		run.setEnabled(!mainWindow.getModel().isEditable());
 		stop.setEnabled(b);
 		pause.setEnabled(b);
 		clean.setEnabled(!b);

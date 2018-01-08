@@ -1,9 +1,5 @@
 package modele;
 
-import graphique.Frame;
-import interfaces.PreviousInterface;
-import interfaces.VertexInterface;
-
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -12,9 +8,6 @@ import java.util.Observable;
 
 import javax.imageio.ImageIO;
 
-import box.MBox;
-import dijkstra.ASetWithOrder;
-import dijkstra.Dijkstra;
 import dijkstra.Maze;
 import exception.MazeReadingException;
 
@@ -42,7 +35,7 @@ public class MazeModel extends Observable {
 
 	public MazeModel(){
 		/*
-		 * Les images ne sont chargées qu'une seule fois : ici. Cela permet de modifier les noms des fichiers facilement.
+		 * Les images ne sont chargées qu'une seule fois : ici. Cela permet de modifier les fichiers facilement.
 		 */
 		start = loadImage("depart.png");
 		arrival = loadImage("arrivee.png");
@@ -100,6 +93,9 @@ public class MazeModel extends Observable {
 	public boolean isPaused() {
 		return paused;
 	}
+	public boolean isValidMaze(){
+		return maze.isValid();
+	}
 	public Maze getMaze() {
 		return maze;
 	}
@@ -132,12 +128,15 @@ public class MazeModel extends Observable {
 	public void setSpeed(int n){
 		speed = n;
 	}
+	
 	public void resetDijkstra(){
 		dijkstra = new ArrayList<int[]>();
 	}
 	public void addDijkstra(int[] t){
 		dijkstra.add(t);
 	}
+	
+
 	
 	
 	
@@ -151,11 +150,6 @@ public class MazeModel extends Observable {
 		this.setChanged();
 		this.notifyObservers();
 	}
-
-
-	
-
-	
 	
 	
 }

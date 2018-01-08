@@ -209,6 +209,44 @@ public class Maze implements GraphInterface {
 	public String getLetter(int i, int j){
 		return ((MBox) matrice.get(i).get(j)).getLetter();
 	}
+	
+	public boolean isValid(){
+		/*
+		 * Un maze ne peut qu'être crée completement vide ou via initFromTextFile 
+		 * Ce qui réduit les tests à faire.
+		 */
+		
+		//1er cas : pas de Maze
+		if (length == 0){
+			return false;
+		}
+		
+		//1 case départ et 1 case arrivée.
+		int c1=0, c2=0;
+		for (ArrayList<MBox> ligne : matrice){
+			for (MBox box : ligne){
+				if (box.getLetter() == "D"){
+					c1++;
+					if (c1 == 2) {
+						return false;
+					}
+				}
+				if (box.getLetter() == "A"){
+					c2++;
+					if (c2 == 2) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		if (c1 == 0 || c2 ==0){
+			return false;
+		}
+		
+		return true;
+	}
+	
 }
 
 

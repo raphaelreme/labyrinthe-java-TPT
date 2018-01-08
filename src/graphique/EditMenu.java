@@ -41,5 +41,7 @@ public class EditMenu extends Menu{
 		}else{
 			editable.setText("Edit : Disabled");
 		}
+		//On ne peut pas modifier le maze tant que celui ci sert de base au Thread de dijkstra
+		editable.setEnabled(!mainWindow.getModel().isRunning());
 	}
 }

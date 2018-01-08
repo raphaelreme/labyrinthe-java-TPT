@@ -5,6 +5,8 @@ import interfaces.VertexInterface;
 
 import java.util.ArrayList;
 
+import javax.swing.SwingUtilities;
+
 import modele.MazeModel;
 import box.MBox;
 import dijkstra.ASetWithOrder;
@@ -57,7 +59,7 @@ class DijkstraThread implements Runnable{
 				MBox m = (MBox)l.get(i);
 				int[] tab = {m.getI(),m.getJ()};
 				model.addDijkstra(tab);
-				model.refresh();
+				refresh();
 				try {
 					Thread.sleep(1000/speed);
 				} catch (InterruptedException e) {
@@ -68,7 +70,7 @@ class DijkstraThread implements Runnable{
 			}
 			
 			model.resetDijkstra();
-			model.refresh();
+			refresh();
 			try {
 				Thread.sleep(1000/speed);
 			} catch (InterruptedException e) {
@@ -79,7 +81,7 @@ class DijkstraThread implements Runnable{
 		if (!runThread) {stopped();return;}
 		
 		//Affichage de la solution
-		while (d.getPrev(v) != model.getMaze().getStart()){
+		while (d.getPrev(v) != model.getMaze().getStart() && d.getPrev(v)!= null){
 			v = d.getPrev(v);
 			MBox m = (MBox)v;
 			int[] tab = {m.getI(),m.getJ()};
@@ -99,19 +101,19 @@ class DijkstraThread implements Runnable{
 	public void changePaused(){
 		pauseThread = !pauseThread;
 		model.setPaused(pauseThread);
-		model.refresh();
+		refresh();
 	}
 	
 	private synchronized void started(){
 		compteur +=1;
 		model.setRunning(true);
-		model.refresh();
+		refresh();
 	}
 	private void stopped(){
 		//on passe à faux avant de liberer le demarrage d'un autre DijkstraThread (compteur -=1)
 		model.setRunning(false);
 		compteur -=1;
-		model.refresh();
+		refresh();
 	}
 	
 	/*
@@ -127,5 +129,16 @@ class DijkstraThread implements Runnable{
 		}
 	}
 	
+	
+	private void refresh(){
+		/* 
+		 * La mise à jour doit se faire dans l'EDT et non dans ce Thread
+		 */
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run(){
+				model.refresh();
+			}
+		});
+	}
 	
 }
