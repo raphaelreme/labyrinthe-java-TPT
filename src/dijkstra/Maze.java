@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import exception.MazeReadingException;
@@ -31,6 +33,7 @@ public class Maze implements GraphInterface {
 		width = 0;
 		matrice = null;
 		listeSommets = null;
+
 		}
 	
 	public int getSize() {
@@ -209,7 +212,42 @@ public class Maze implements GraphInterface {
 	public String getLetter(int i, int j){
 		return ((MBox) matrice.get(i).get(j)).getLetter();
 	}
-	
+
+	public void change(int i, int j){
+		//Pas top, trop de code pour une petite modification à cause des différentes classes de Box.
+		MBox box = matrice.get(i).get(j);
+		MBox newBox = null;
+
+		int k = listeSommets.indexOf(box);
+
+		ArrayList<Class<?>> tab = new ArrayList<Class<?>>();
+		tab.add(DBox.class); tab.add(ABox.class); tab.add(EBox.class); tab.add(WBox.class); tab.add(DBox.class);
+
+		Class<?> c = tab.get(tab.indexOf(box.getClass())+1);
+		Class<?>[] types = {Maze.class,Integer.class,Integer.class};
+
+		try {
+			Constructor<?> ct = c.getConstructor(types);
+			newBox = (MBox)ct.newInstance(this,i,j);
+
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+
+		matrice.get(i).set(j, newBox);
+		listeSommets.set(k, newBox);
+	}
+
 	public boolean isValid(){
 		/*
 		 * Un maze ne peut qu'être crée completement vide ou via initFromTextFile 

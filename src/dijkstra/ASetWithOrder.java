@@ -17,8 +17,6 @@ public class ASetWithOrder extends ASet{
 		list.add(v);
 	}
 	
-	public ArrayList<VertexInterface> getList(){
-		return list;
-	}
+	public ArrayList<VertexInterface> getList(){ return list; }
 
 }

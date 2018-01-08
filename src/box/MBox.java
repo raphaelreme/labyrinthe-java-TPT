@@ -9,10 +9,10 @@ public abstract class MBox implements VertexInterface {
 	private Maze m;
 	protected String letter;
 	
-	public MBox(Maze m, int i, int j) {
+	public MBox(Maze m, Integer i, Integer j) {
 		this.m = m;
-		this.i = i;
-		this.j = j;
+		this.i = i.intValue();
+		this.j = j.intValue();
 	}
 	
 	public abstract boolean pass();
