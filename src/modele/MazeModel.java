@@ -144,6 +144,10 @@ public class MazeModel extends Observable {
 		maze.saveToTextFile(f);
 	}
 	
+	public void changeSize(int length, int width){
+		maze.emptyInit(length,width);
+	}
+	
 	
 	
 	public void refresh(){

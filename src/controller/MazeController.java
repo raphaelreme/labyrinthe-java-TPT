@@ -25,20 +25,42 @@ public class MazeController {
 	
 	
 	//File Menu
+	public int setNew(String s){
+		if (s==null){
+			return 0;
+		}
+		
+		
+		String[] tab = s.split(",");
+		if (tab.length != 2){
+			return -1;
+		}
+		int length;
+		int width;
+		try{
+			length = Integer.valueOf(tab[0]);
+			width = Integer.valueOf(tab[1]);
+		}catch (NumberFormatException e){
+			return -1;
+		}
+		
+		if (width<=0||length<=0){
+			return 1;
+		}
+		if (width>=50||length>=50){
+			return 2;
+		}
+		
+		model.changeSize(length,width);
+		model.refresh();
+		
+		return 0;
+	}
+	
+	
 	public int setFile(File f){
 		if (f == null){
-			try {
-				model.setFile(f); //f == null, il n'y a jamais d'exception ici
-			} catch (MazeReadingException e) {
-				e.printStackTrace();
-			}
-			
-			if (dijkstraThread != null){
-				dijkstraThread.stopThread();
-			}
-			model.resetDijkstra();
-			model.refresh();
-			return 0;
+			return -1;
 		}
 		
 		if (f.exists()){
@@ -95,6 +117,7 @@ public class MazeController {
 	//EditMenu
 	public int setEditable(){
 		model.setEditable(!model.isEditable());
+		model.resetDijkstra();
 		model.refresh();
 		return 0;
 	}

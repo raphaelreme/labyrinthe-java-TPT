@@ -29,11 +29,7 @@ public class Maze implements GraphInterface {
 	private ArrayList<VertexInterface> listeSommets;
 	
 	public Maze() {
-		length = 0;
-		width = 0;
-		matrice = null;
-		listeSommets = null;
-
+		emptyInit();
 		}
 	
 	public int getSize() {
@@ -88,17 +84,36 @@ public class Maze implements GraphInterface {
 		
 	}
 	
+	public final void emptyInit(){
+		emptyInit(10,10);
+	}
+	
+	public final void emptyInit(int length, int width){
+		this.length = length;
+		this.width = width;
+		this.matrice = new ArrayList<ArrayList<MBox>>(length);
+		this.listeSommets = new ArrayList<VertexInterface>(length*width);
+		
+		for (int i=0; i<length; i++){
+			ArrayList<MBox> tmp = new ArrayList<MBox>(width);
+			for(int j=0; j<width; j++){
+				EBox e = new EBox(this,i,j);
+				tmp.add(e);
+				this.listeSommets.add(e);
+			}
+			this.matrice.add(tmp);
+		}
+	}
+	
+	
+	
 	/*
 	 * Crée le maze à partir d'un fichier texte
-	 * Si le pointeur passé en parametre est null, le maze est réinitialisé
+	 * Si le pointeur passé en parametre est null, le maze est reinitialisé
 	 */
 	public final void initFromTextFile(File file) throws MazeReadingException{
 		if (file == null){
-			length = 0;
-			width = 0;
-			matrice = null;
-			listeSommets = null;
-			return;
+			emptyInit();
 		}
 		
 		BufferedReader text = null;

@@ -90,7 +90,7 @@ public class Panel extends JPanel{
 	private class PanelMouseListener extends MouseAdapter{
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
+		public void mousePressed(MouseEvent e) {
 			if (!mainWindow.getModel().isEditable()) {return;}
 
 			int j =(int)(e.getX()/boxWidth), i = (int)(e.getY()/boxHeight);
