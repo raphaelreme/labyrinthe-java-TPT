@@ -97,7 +97,7 @@ public class Maze implements GraphInterface {
 		for (int i=0; i<length; i++){
 			ArrayList<MBox> tmp = new ArrayList<MBox>(width);
 			for(int j=0; j<width; j++){
-				EBox e = new EBox(this,i,j);
+				EBox e = new EBox(i,j);
 				tmp.add(e);
 				this.listeSommets.add(e);
 			}
@@ -114,6 +114,7 @@ public class Maze implements GraphInterface {
 	public final void initFromTextFile(File file) throws MazeReadingException{
 		if (file == null){
 			emptyInit();
+			return;
 		}
 		
 		BufferedReader text = null;
@@ -142,19 +143,19 @@ public class Maze implements GraphInterface {
 				for (int j=0; j<m; j++){
 					char charj = ligne.charAt(j);
 					if (charj == 'E'){
-						MBox b = new EBox(this,i,j);
+						MBox b = new EBox(i,j);
 						tmp.add(b);
 						listeSommets.add(b);
 					} else if (charj == 'D'){
-						MBox b = new DBox(this,i,j);
+						MBox b = new DBox(i,j);
 						tmp.add(b);
 						listeSommets.add(b);
 					} else if (charj == 'W'){
-						MBox b = new WBox(this,i,j);
+						MBox b = new WBox(i,j);
 						tmp.add(b);
 						listeSommets.add(b);
 					} else if (charj == 'A'){
-						MBox b = new ABox(this,i,j);
+						MBox b = new ABox(i,j);
 						tmp.add(b);
 						listeSommets.add(b);
 					} else {
@@ -239,11 +240,11 @@ public class Maze implements GraphInterface {
 		tab.add(DBox.class); tab.add(ABox.class); tab.add(EBox.class); tab.add(WBox.class); tab.add(DBox.class);
 
 		Class<?> c = tab.get(tab.indexOf(box.getClass())+1);
-		Class<?>[] types = {Maze.class,Integer.class,Integer.class};
+		Class<?>[] types = {Integer.class,Integer.class};
 
 		try {
 			Constructor<?> ct = c.getConstructor(types);
-			newBox = (MBox)ct.newInstance(this,i,j);
+			newBox = (MBox)ct.newInstance(i,j);
 
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();

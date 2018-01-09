@@ -1,10 +1,8 @@
 package box;
 
-import dijkstra.Maze;
-
 public class WBox extends MBox{
-	public WBox(Maze m, Integer i, Integer j){
-		super(m,i,j);
+	public WBox(Integer i, Integer j){
+		super(i,j);
 		letter = "W";
 	}
 	public boolean pass() {

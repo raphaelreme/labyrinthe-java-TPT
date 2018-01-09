@@ -63,6 +63,7 @@ public class MazeModel extends Observable {
 		} catch (IOException e){
 			e.printStackTrace();
 			System.out.println("Erreur dans le chargement des images");
+			System.exit(0);
 		}
 		return img;
 	}

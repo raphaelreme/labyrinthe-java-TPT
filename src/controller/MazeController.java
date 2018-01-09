@@ -67,12 +67,13 @@ public class MazeController {
 			try {
 				model.setFile(f);
 			} catch (MazeReadingException e){
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 				try {
 					//On remet le fichier précendent en place.
 					model.setFile(model.getFile()); // Le fichier précédent était valide, cela ne lève pas d'exception
-				} catch (MazeReadingException e1) {	
 					
+				} catch (MazeReadingException e1) {	
+					e1.printStackTrace();
 				}
 				return 1;
 			}

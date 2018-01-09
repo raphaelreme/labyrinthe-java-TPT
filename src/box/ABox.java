@@ -1,10 +1,8 @@
 package box;
 
-import dijkstra.Maze;
-
 public class ABox extends MBox{
-	public ABox(Maze m, Integer i, Integer j){
-		super(m,i,j);
+	public ABox(Integer i, Integer j){
+		super(i,j);
 		letter = "A";
 	}
 	public boolean pass() {
