@@ -19,7 +19,7 @@ import interfaces.GraphInterface;
 import interfaces.VertexInterface;
 
 
-public class Maze implements GraphInterface {
+public final class Maze implements GraphInterface {
 	
 	private int length;
 	private int width;
@@ -84,11 +84,11 @@ public class Maze implements GraphInterface {
 		
 	}
 	
-	public final void emptyInit(){
+	public void emptyInit(){
 		emptyInit(10,10);
 	}
 	
-	public final void emptyInit(int length, int width){
+	public void emptyInit(int length, int width){
 		this.length = length;
 		this.width = width;
 		this.matrice = new ArrayList<ArrayList<MBox>>(length);
@@ -111,7 +111,7 @@ public class Maze implements GraphInterface {
 	 * Crée le maze à partir d'un fichier texte
 	 * Si le pointeur passé en parametre est null, le maze est reinitialisé
 	 */
-	public final void initFromTextFile(File file) throws MazeReadingException{
+	public void initFromTextFile(File file) throws MazeReadingException{
 		if (file == null){
 			emptyInit();
 			return;
@@ -182,7 +182,7 @@ public class Maze implements GraphInterface {
 		
 	}
 	
-	public final void saveToTextFile(File file){
+	public void saveToTextFile(File file){
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(file);
@@ -266,7 +266,7 @@ public class Maze implements GraphInterface {
 
 	public boolean isValid(){
 		/*
-		 * Un maze ne peut qu'être crée completement vide ou via initFromTextFile 
+		 * Un maze ne peut qu'être crée via les methode init du maze 
 		 * Ce qui réduit les tests à faire.
 		 */
 		
@@ -297,7 +297,6 @@ public class Maze implements GraphInterface {
 		if (c1 == 0 || c2 ==0){
 			return false;
 		}
-		
 		return true;
 	}
 	

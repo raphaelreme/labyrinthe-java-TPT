@@ -1,6 +1,6 @@
 package box;
 
-public class ABox extends MBox{
+public final class ABox extends MBox{
 	public ABox(Integer i, Integer j){
 		super(i,j);
 		letter = "A";

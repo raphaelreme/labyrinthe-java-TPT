@@ -15,12 +15,12 @@ import exception.MazeReadingException;
  * Contient les données du projet.
  * Permet la modification des données et prévient la Frame qui elle-même transmet le message à ses composants)
  */
-public class MazeModel extends Observable {
+public final class MazeModel extends Observable {
 
-	private Image background;
-	private Image wall;
-	private Image start;
-	private Image arrival;
+	private final Image background;
+	private final Image wall;
+	private final Image start;
+	private final Image arrival;
 	
 	private boolean running;
 	private boolean editable;
@@ -28,7 +28,7 @@ public class MazeModel extends Observable {
 	private boolean paused;
 	
 	private File file;
-	private Maze maze = new Maze();
+	private final Maze maze = new Maze();
 	private ArrayList<int[]> dijkstra;
 	private int speed;
 	
@@ -54,7 +54,7 @@ public class MazeModel extends Observable {
 	
 	
 	/*
-	 * Charge des images situées dans file.
+	 * Chargement des images situées dans file.
 	 */
 	private static Image loadImage(String nom){
 		Image img = null;
@@ -141,7 +141,6 @@ public class MazeModel extends Observable {
 	}
 	
 
-	
 	
 	
 	public void save(File f){

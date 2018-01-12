@@ -10,7 +10,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public final class Saver implements ActionListener {
 
-    private Frame mainWindow;
+    private final Frame mainWindow;
 
     public Saver(Frame mainWindow){
         this.mainWindow = mainWindow;
@@ -67,7 +67,5 @@ public final class Saver implements ActionListener {
         }
 
         return -1;
-
-
     }
 }

@@ -13,15 +13,14 @@ import modele.MazeModel;
  * Chacune de ses fonctions renvoie un entier caractérisant le contrôle
  * Si tout s'est bien passé elles renvoient 0
  */
-public class MazeController {
+public final class MazeController {
 
-	private MazeModel model;
+	private final MazeModel model;
 	private DijkstraThread dijkstraThread;
 	
 	public MazeController(MazeModel m){
 		this.model = m;
 	}
-	
 	
 	
 	//File Menu
@@ -95,7 +94,6 @@ public class MazeController {
 			return -1;
 		}
 		
-		
 		//Verif qu'on enregistre bien un .txt
 		String name = f.getName();
 				
@@ -127,7 +125,6 @@ public class MazeController {
 	}
 	
 	
-		
 	
 	//RunMenu
 	public int run(){

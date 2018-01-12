@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import interfaces.PiInterface;
 import interfaces.VertexInterface;
 
-public class Pi implements PiInterface{
+final class Pi implements PiInterface{
 
 	Hashtable<VertexInterface,Integer> t = new Hashtable<VertexInterface,Integer>();
 	

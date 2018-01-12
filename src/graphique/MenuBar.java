@@ -6,7 +6,7 @@ import javax.swing.JMenuBar;
  * Crée la barre de menu de la fenetre
  */
 
-public class MenuBar extends JMenuBar {
+public final class MenuBar extends JMenuBar {
 
 	private static final long serialVersionUID = 1L;
 	

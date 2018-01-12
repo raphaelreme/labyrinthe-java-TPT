@@ -1,7 +1,5 @@
 package graphique;
 
-
-
 import java.util.Observable;
 import java.util.Observer;
 
@@ -10,14 +8,14 @@ import javax.swing.JFrame;
 import controller.MazeController;
 import modele.MazeModel;
 
-public class Frame extends JFrame implements Observer {
+public final class Frame extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
-	MazeModel model;
-	MazeController controller;
+	private final MazeModel model;
+	private final MazeController controller;
 	
-	Panel contentPanel;
-	MenuBar menuBar;
+	private final Panel contentPanel;
+	private final MenuBar menuBar;
 
 
 	public Frame(MazeModel model, MazeController controller){

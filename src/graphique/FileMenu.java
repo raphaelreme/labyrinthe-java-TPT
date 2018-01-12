@@ -9,10 +9,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class FileMenu extends Menu{
+public final class FileMenu extends Menu{
 
     private static final long serialVersionUID = 1L;
-    Saver saver;
+    private final Saver saver;
 
 
 
@@ -94,7 +94,7 @@ public class FileMenu extends Menu{
 
 
 
-    private class OpenListener implements ActionListener {
+    private final class OpenListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -131,9 +131,8 @@ public class FileMenu extends Menu{
     }
 
     /*
-     * Ouvre le même genre de boite de dialogue que openListener
-     * Differe dans la validation de l'entrée utilisateur
-     */
+     * 
+     *
     private class SaveListener extends OpenListener {
 
         @Override
@@ -149,5 +148,6 @@ public class FileMenu extends Menu{
             }
         }
     }
+    */
    
 }

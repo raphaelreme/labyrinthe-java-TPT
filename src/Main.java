@@ -16,7 +16,6 @@ public class Main {
 		
 		Frame f = new Frame(m,c);
 		
-		
 	}
 
 }

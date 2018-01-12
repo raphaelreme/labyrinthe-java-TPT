@@ -9,25 +9,21 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
-public class Panel extends JPanel{
+public final class Panel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 
-	private Frame mainWindow;
+	private final Frame mainWindow;
 
 	//taille des cases du labyrinthe
-	private float boxHeight;
-	private float boxWidth;
+	private float boxHeight = 0;
+	private float boxWidth = 0;
 
 
 	public Panel(Frame f){
 		super();
 		mainWindow = f;
-
-		//pas de labyrinthe
-		boxHeight = 0;
-		boxWidth = 0;
-
+		
 		this.addMouseListener(new PanelMouseListener());
 	}
 
@@ -37,7 +33,7 @@ public class Panel extends JPanel{
 			drawMaze(g);
 	}
 
-	protected void drawMaze(Graphics g){
+	private void drawMaze(Graphics g){
 
 		int l = mainWindow.getModel().getMaze().getLength();
 		int w = mainWindow.getModel().getMaze().getWidth();
@@ -73,7 +69,7 @@ public class Panel extends JPanel{
 		drawDijkstra(g);
 	}
 
-	public void drawDijkstra(Graphics g){
+	private void drawDijkstra(Graphics g){
 		g.setColor(Color.RED);
 		for (int[] tab:mainWindow.getModel().getDijkstra()){
 			int i = tab[0], j = tab[1];
@@ -87,7 +83,10 @@ public class Panel extends JPanel{
 
 
 
-	private class PanelMouseListener extends MouseAdapter{
+	/*
+	 * A changer !
+	 */
+	private final class PanelMouseListener extends MouseAdapter{
 
 		@Override
 		public void mousePressed(MouseEvent e) {

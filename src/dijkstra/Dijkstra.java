@@ -2,7 +2,7 @@ package dijkstra;
 import interfaces.*;
 
 
-public class Dijkstra {
+public final class Dijkstra {
 	
 	private static PreviousInterface dijkstra(GraphInterface g,
 			VertexInterface r, ASetInterface a,
