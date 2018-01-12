@@ -44,7 +44,7 @@ public class MazeModel extends Observable {
 		
 		running = false;
 		editable = false;
-		saved = false;
+		saved = true;
 		paused = false;
 		
 		file = null;
@@ -120,6 +120,9 @@ public class MazeModel extends Observable {
 	}
 	public void setPaused(boolean b) {
 		paused = b;
+	}
+	public void setSaved(boolean b) {
+		saved = b;
 	}
 	public void setFile(File f) throws MazeReadingException{
 		//on essaye d'abord d'initialiser le maze avant de changer le fichier

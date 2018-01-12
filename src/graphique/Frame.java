@@ -28,7 +28,7 @@ public class Frame extends JFrame implements Observer {
 		this.setIconImage(model.getStart());
 		this.setSize(500,500);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		contentPanel = new Panel(this);
 		menuBar = new MenuBar(this);
@@ -64,5 +64,10 @@ public class Frame extends JFrame implements Observer {
 	public MazeController getController(){
 		return controller;
 	}
-	
+
+	@Override
+	public void dispose(){
+		if ((new Saver(this)).save()==0)
+			super.dispose();
+	}
 }

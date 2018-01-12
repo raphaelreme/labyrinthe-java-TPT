@@ -12,12 +12,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class FileMenu extends Menu{
 
     private static final long serialVersionUID = 1L;
-
+    Saver saver;
 
 
 
     public FileMenu(Frame window){
         super("File",window);
+        saver = new Saver (window);
+
         initNew();
         initOpen();
         initSave();
@@ -31,6 +33,9 @@ public class FileMenu extends Menu{
 
         _new.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                if (saver.save() == -1)
+                    return;
+
             	String inputValue = (String) JOptionPane.showInputDialog(mainWindow,
             			"Please input a correct size value","Set size",JOptionPane.PLAIN_MESSAGE,
             			null,null,"10,10");
@@ -68,7 +73,7 @@ public class FileMenu extends Menu{
 
     private void initSave(){
         JMenuItem save = new JMenuItem("Save");
-        save.addActionListener(new SaveListener());
+        save.addActionListener(saver);
 
         this.add(save);
     }
@@ -78,7 +83,7 @@ public class FileMenu extends Menu{
 
         quit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                System.exit(0);
+                mainWindow.dispose();
             }
         });
 
@@ -93,6 +98,9 @@ public class FileMenu extends Menu{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+            if (saver.save() == -1)
+                return;
+
             JFileChooser fc = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Texte","txt");
             fc.setCurrentDirectory(new File("file"));

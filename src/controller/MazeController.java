@@ -50,7 +50,7 @@ public class MazeController {
 		if (width>=50||length>=50){
 			return 2;
 		}
-		
+		model.setSaved(true);
 		model.changeSize(length,width);
 		model.refresh();
 		
@@ -66,12 +66,13 @@ public class MazeController {
 		if (f.exists()){
 			try {
 				model.setFile(f);
+				model.setSaved(true);
 			} catch (MazeReadingException e){
 				System.out.println(e.getMessage());
 				try {
 					//On remet le fichier précendent en place.
 					model.setFile(model.getFile()); // Le fichier précédent était valide, cela ne lève pas d'exception
-					
+					model.setSaved(true);
 				} catch (MazeReadingException e1) {	
 					e1.printStackTrace();
 				}
@@ -101,11 +102,13 @@ public class MazeController {
         
         if (!name.contains(".")){
             model.save(new File(f.getPath() + ".txt"));
+			model.setSaved(true);
             return 0;
         }
 
         if (name.substring(name.length()-4).equals(".txt")){
             model.save(f);
+			model.setSaved(true);
             return 0;
         }
         

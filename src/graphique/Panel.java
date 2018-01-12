@@ -95,6 +95,7 @@ public class Panel extends JPanel{
 
 			int j =(int)(e.getX()/boxWidth), i = (int)(e.getY()/boxHeight);
 			mainWindow.getModel().getMaze().change(i,j);
+			mainWindow.getModel().setSaved(false);
 			mainWindow.getModel().refresh();
 		}
 
