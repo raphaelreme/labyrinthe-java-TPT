@@ -1,7 +1,5 @@
 package graphique;
 
-
-
 import java.util.Observable;
 import java.util.Observer;
 
@@ -10,14 +8,14 @@ import javax.swing.JFrame;
 import controller.MazeController;
 import modele.MazeModel;
 
-public class Frame extends JFrame implements Observer {
+public final class Frame extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
-	MazeModel model;
-	MazeController controller;
+	private final MazeModel model;
+	private final MazeController controller;
 	
-	Panel contentPanel;
-	MenuBar menuBar;
+	private final Panel contentPanel;
+	private final MenuBar menuBar;
 
 
 	public Frame(MazeModel model, MazeController controller){
@@ -28,7 +26,7 @@ public class Frame extends JFrame implements Observer {
 		this.setIconImage(model.getStart());
 		this.setSize(500,500);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		contentPanel = new Panel(this);
 		menuBar = new MenuBar(this);
@@ -64,5 +62,10 @@ public class Frame extends JFrame implements Observer {
 	public MazeController getController(){
 		return controller;
 	}
-	
+
+	@Override
+	public void dispose(){
+		if ((new Saver(this)).save()==0)
+			super.dispose();
+	}
 }

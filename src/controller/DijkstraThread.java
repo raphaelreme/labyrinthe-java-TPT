@@ -12,11 +12,11 @@ import box.MBox;
 import dijkstra.ASetWithOrder;
 import dijkstra.Dijkstra;
 
-class DijkstraThread implements Runnable{
+final class DijkstraThread implements Runnable{
 	
 	private static int compteur = 0;
 	
-	private MazeModel model;
+	private final MazeModel model;
 	private boolean runThread = true;
 	private boolean pauseThread = false;
 	

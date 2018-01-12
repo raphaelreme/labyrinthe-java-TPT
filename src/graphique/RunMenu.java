@@ -9,29 +9,33 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
-public class RunMenu extends Menu{
+public final class RunMenu extends Menu{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private JMenuItem run;
-	private JMenuItem pause;
-	private JMenuItem stop;
-	private JMenuItem clean;
+	private final JMenuItem run;
+	private final JMenuItem pause;
+	private final JMenuItem stop;
+	private final JMenuItem clean;
 	private JRadioButtonMenuItem selectedSpeed;
 
 	public RunMenu(Frame window) {
 		super("Run", window);
+		
+		run = new JMenuItem("Run");
+		pause = new JMenuItem("Pause");
+		stop = new JMenuItem("Stop");
+		clean = new JMenuItem("Clean");
+		
 		initRun();
 		initPause();
 		initStop();
 		initClean();
 		initSpeed();
-		
 	}
 	
 	
 	private void initRun(){
-		run = new JMenuItem("Run");
 		
 		run.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
@@ -47,7 +51,6 @@ public class RunMenu extends Menu{
 	}
 	
 	private void initStop(){
-		stop = new JMenuItem("Stop");
 		stop.setEnabled(false);
 		
 		stop.addActionListener(new ActionListener(){
@@ -60,7 +63,6 @@ public class RunMenu extends Menu{
 	}
 	
 	private void initPause(){
-		pause = new JMenuItem("Pause");
 		pause.setEnabled(false);
 		
 		pause.addActionListener(new ActionListener(){
@@ -73,7 +75,6 @@ public class RunMenu extends Menu{
 	}
 	
 	private void initClean(){
-		clean = new JMenuItem("Clean");
 		
 		clean.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -135,14 +136,11 @@ public class RunMenu extends Menu{
 		} else {
 			pause.setText("Pause");
 		}
-		
 	}
 	
 	
 	
-	
-	
-	private class SpeedListener implements ActionListener{
+	private final class SpeedListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -154,9 +152,7 @@ public class RunMenu extends Menu{
 			} else if (r == 0){
 				selectedSpeed = (JRadioButtonMenuItem)e.getSource();
 			}
-			
 		}
-		
 	}
 
 	

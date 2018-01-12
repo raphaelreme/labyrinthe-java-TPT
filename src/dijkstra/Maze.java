@@ -19,7 +19,7 @@ import interfaces.GraphInterface;
 import interfaces.VertexInterface;
 
 
-public class Maze implements GraphInterface {
+public final class Maze implements GraphInterface {
 	
 	private int length;
 	private int width;
@@ -29,11 +29,7 @@ public class Maze implements GraphInterface {
 	private ArrayList<VertexInterface> listeSommets;
 	
 	public Maze() {
-		length = 0;
-		width = 0;
-		matrice = null;
-		listeSommets = null;
-
+		emptyInit();
 		}
 	
 	public int getSize() {
@@ -88,16 +84,36 @@ public class Maze implements GraphInterface {
 		
 	}
 	
+	public void emptyInit(){
+		emptyInit(10,10);
+	}
+	
+	public void emptyInit(int length, int width){
+		this.length = length;
+		this.width = width;
+		this.matrice = new ArrayList<ArrayList<MBox>>(length);
+		this.listeSommets = new ArrayList<VertexInterface>(length*width);
+		
+		for (int i=0; i<length; i++){
+			ArrayList<MBox> tmp = new ArrayList<MBox>(width);
+			for(int j=0; j<width; j++){
+				EBox e = new EBox(i,j);
+				tmp.add(e);
+				this.listeSommets.add(e);
+			}
+			this.matrice.add(tmp);
+		}
+	}
+	
+	
+	
 	/*
 	 * Crée le maze à partir d'un fichier texte
-	 * Si le pointeur passé en parametre est null, le maze est réinitialisé
+	 * Si le pointeur passé en parametre est null, le maze est reinitialisé
 	 */
-	public final void initFromTextFile(File file) throws MazeReadingException{
+	public void initFromTextFile(File file) throws MazeReadingException{
 		if (file == null){
-			length = 0;
-			width = 0;
-			matrice = null;
-			listeSommets = null;
+			emptyInit();
 			return;
 		}
 		
@@ -127,19 +143,19 @@ public class Maze implements GraphInterface {
 				for (int j=0; j<m; j++){
 					char charj = ligne.charAt(j);
 					if (charj == 'E'){
-						MBox b = new EBox(this,i,j);
+						MBox b = new EBox(i,j);
 						tmp.add(b);
 						listeSommets.add(b);
 					} else if (charj == 'D'){
-						MBox b = new DBox(this,i,j);
+						MBox b = new DBox(i,j);
 						tmp.add(b);
 						listeSommets.add(b);
 					} else if (charj == 'W'){
-						MBox b = new WBox(this,i,j);
+						MBox b = new WBox(i,j);
 						tmp.add(b);
 						listeSommets.add(b);
 					} else if (charj == 'A'){
-						MBox b = new ABox(this,i,j);
+						MBox b = new ABox(i,j);
 						tmp.add(b);
 						listeSommets.add(b);
 					} else {
@@ -166,7 +182,7 @@ public class Maze implements GraphInterface {
 		
 	}
 	
-	public final void saveToTextFile(File file){
+	public void saveToTextFile(File file){
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(file);
@@ -224,11 +240,11 @@ public class Maze implements GraphInterface {
 		tab.add(DBox.class); tab.add(ABox.class); tab.add(EBox.class); tab.add(WBox.class); tab.add(DBox.class);
 
 		Class<?> c = tab.get(tab.indexOf(box.getClass())+1);
-		Class<?>[] types = {Maze.class,Integer.class,Integer.class};
+		Class<?>[] types = {Integer.class,Integer.class};
 
 		try {
 			Constructor<?> ct = c.getConstructor(types);
-			newBox = (MBox)ct.newInstance(this,i,j);
+			newBox = (MBox)ct.newInstance(i,j);
 
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
@@ -250,7 +266,7 @@ public class Maze implements GraphInterface {
 
 	public boolean isValid(){
 		/*
-		 * Un maze ne peut qu'être crée completement vide ou via initFromTextFile 
+		 * Un maze ne peut qu'être crée via les methode init du maze 
 		 * Ce qui réduit les tests à faire.
 		 */
 		
@@ -281,7 +297,6 @@ public class Maze implements GraphInterface {
 		if (c1 == 0 || c2 ==0){
 			return false;
 		}
-		
 		return true;
 	}
 	

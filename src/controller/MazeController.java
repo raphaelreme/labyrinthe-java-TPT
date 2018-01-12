@@ -13,9 +13,9 @@ import modele.MazeModel;
  * Chacune de ses fonctions renvoie un entier caractérisant le contrôle
  * Si tout s'est bien passé elles renvoient 0
  */
-public class MazeController {
+public final class MazeController {
 
-	private MazeModel model;
+	private final MazeModel model;
 	private DijkstraThread dijkstraThread;
 	
 	public MazeController(MazeModel m){
@@ -23,34 +23,57 @@ public class MazeController {
 	}
 	
 	
-	
 	//File Menu
+	public int setNew(String s){
+		if (s==null){
+			return 0;
+		}
+		
+		
+		String[] tab = s.split(",");
+		if (tab.length != 2){
+			return -1;
+		}
+		int length;
+		int width;
+		try{
+			length = Integer.valueOf(tab[0]);
+			width = Integer.valueOf(tab[1]);
+		}catch (NumberFormatException e){
+			return -1;
+		}
+		
+		if (width<=0||length<=0){
+			return 1;
+		}
+		if (width>=50||length>=50){
+			return 2;
+		}
+		model.setSaved(true);
+		model.changeSize(length,width);
+		model.refresh();
+		
+		return 0;
+	}
+	
+	
 	public int setFile(File f){
 		if (f == null){
-			try {
-				model.setFile(f); //f == null, il n'y a jamais d'exception ici
-			} catch (MazeReadingException e) {
-				e.printStackTrace();
-			}
-			
-			if (dijkstraThread != null){
-				dijkstraThread.stopThread();
-			}
-			model.resetDijkstra();
-			model.refresh();
-			return 0;
+			return -1;
 		}
 		
 		if (f.exists()){
 			try {
 				model.setFile(f);
+				model.setSaved(true);
 			} catch (MazeReadingException e){
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 				try {
 					//On remet le fichier précendent en place.
 					model.setFile(model.getFile()); // Le fichier précédent était valide, cela ne lève pas d'exception
+					model.setSaved(true);
 				} catch (MazeReadingException e1) {	
-					
+					e1.printStackTrace();
 				}
 				return 1;
 			}
@@ -71,18 +94,19 @@ public class MazeController {
 			return -1;
 		}
 		
-		
 		//Verif qu'on enregistre bien un .txt
 		String name = f.getName();
 				
         
         if (!name.contains(".")){
             model.save(new File(f.getPath() + ".txt"));
+			model.setSaved(true);
             return 0;
         }
 
         if (name.substring(name.length()-4).equals(".txt")){
             model.save(f);
+			model.setSaved(true);
             return 0;
         }
         
@@ -95,12 +119,12 @@ public class MazeController {
 	//EditMenu
 	public int setEditable(){
 		model.setEditable(!model.isEditable());
+		model.resetDijkstra();
 		model.refresh();
 		return 0;
 	}
 	
 	
-		
 	
 	//RunMenu
 	public int run(){

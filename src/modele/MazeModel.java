@@ -15,12 +15,12 @@ import exception.MazeReadingException;
  * Contient les données du projet.
  * Permet la modification des données et prévient la Frame qui elle-même transmet le message à ses composants)
  */
-public class MazeModel extends Observable {
+public final class MazeModel extends Observable {
 
-	private Image background;
-	private Image wall;
-	private Image start;
-	private Image arrival;
+	private final Image background;
+	private final Image wall;
+	private final Image start;
+	private final Image arrival;
 	
 	private boolean running;
 	private boolean editable;
@@ -28,7 +28,7 @@ public class MazeModel extends Observable {
 	private boolean paused;
 	
 	private File file;
-	private Maze maze = new Maze();
+	private final Maze maze = new Maze();
 	private ArrayList<int[]> dijkstra;
 	private int speed;
 	
@@ -44,7 +44,7 @@ public class MazeModel extends Observable {
 		
 		running = false;
 		editable = false;
-		saved = false;
+		saved = true;
 		paused = false;
 		
 		file = null;
@@ -54,7 +54,7 @@ public class MazeModel extends Observable {
 	
 	
 	/*
-	 * Charge des images situées dans file.
+	 * Chargement des images situées dans file.
 	 */
 	private static Image loadImage(String nom){
 		Image img = null;
@@ -63,6 +63,7 @@ public class MazeModel extends Observable {
 		} catch (IOException e){
 			e.printStackTrace();
 			System.out.println("Erreur dans le chargement des images");
+			System.exit(0);
 		}
 		return img;
 	}
@@ -120,6 +121,9 @@ public class MazeModel extends Observable {
 	public void setPaused(boolean b) {
 		paused = b;
 	}
+	public void setSaved(boolean b) {
+		saved = b;
+	}
 	public void setFile(File f) throws MazeReadingException{
 		//on essaye d'abord d'initialiser le maze avant de changer le fichier
 		maze.initFromTextFile(f); 
@@ -139,9 +143,12 @@ public class MazeModel extends Observable {
 
 	
 	
-	
 	public void save(File f){
 		maze.saveToTextFile(f);
+	}
+	
+	public void changeSize(int length, int width){
+		maze.emptyInit(length,width);
 	}
 	
 	

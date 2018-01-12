@@ -15,7 +15,7 @@ public class Menu extends JMenu{
 		super(title);
 		mainWindow = window;
 	}
-	protected void notifyForUpdate(){
-		
-	}
+	
+	
+	protected void notifyForUpdate(){}
 }

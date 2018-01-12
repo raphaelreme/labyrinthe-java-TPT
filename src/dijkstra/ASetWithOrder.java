@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * N'a pas d'interet pour dijkstra 
  * mais sert à afficher dans l'ordre les sommets qui ont été parcourus par l'algorithme
  */
-public class ASetWithOrder extends ASet{
+public final class ASetWithOrder extends ASet{
 	
 	private ArrayList<VertexInterface> list = new ArrayList<VertexInterface>();
 	
@@ -17,6 +17,8 @@ public class ASetWithOrder extends ASet{
 		list.add(v);
 	}
 	
-	public ArrayList<VertexInterface> getList(){ return list; }
+	public ArrayList<VertexInterface> getList(){
+		return list; 
+	}
 
 }

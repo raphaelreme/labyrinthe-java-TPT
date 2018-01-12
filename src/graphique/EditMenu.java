@@ -10,28 +10,20 @@ public class EditMenu extends Menu{
 
 	private static final long serialVersionUID = 1L;
 	
-	private JMenuItem editable;
+	private final JMenuItem editable;
 	
 	public EditMenu(Frame window){
 		super("Edit", window);
-		initEditable();
-	}
-	
-	
-	
-	public void initEditable(){
+		
 		editable = new JMenuItem("Edit : Disabled");
 		editable.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				mainWindow.getController().setEditable();
 			}
 		});
+		
 		this.add(editable);
 	}
-	
-	
-	
-	
 	
 	
 	
