@@ -193,5 +193,13 @@ public final class MazeController {
 		return -1; //En cas d'erreur
 	}
 	
+	
+	//Panel
+	public int changeMaze(int i, int j){
+		model.changeMaze(i,j);
+		model.setSaved(false);
+		model.refresh();
+		return 0;
+	}
 
 }

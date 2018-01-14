@@ -122,7 +122,7 @@ public final class RunMenu extends Menu{
 		this.add(speed);
 	}
 	
-	
+	@Override
 	public void notifyForUpdate(){
 		boolean b = mainWindow.getModel().isRunning();
 		
@@ -137,6 +137,7 @@ public final class RunMenu extends Menu{
 			pause.setText("Pause");
 		}
 	}
+	
 	
 	
 	

@@ -151,6 +151,10 @@ public final class MazeModel extends Observable {
 		maze.emptyInit(length,width);
 	}
 	
+	public void changeMaze(int i, int j){
+		maze.change(i,j);
+	}
+	
 	
 	
 	public void refresh(){

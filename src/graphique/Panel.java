@@ -9,6 +9,15 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+/*
+ * Panneau central de la fenêtre.
+ * 
+ * Se charge de l'affichage du labyrinthe et se gère lui même son layout.
+ * 
+ * 
+ * On pourrait envisager dans une version supérieur, l'utilisation d'un GridLayout variable 
+ * et d'une classe BoxPanel pour sous-traiter l'affichage du labyrinthe.
+ */
 public final class Panel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
@@ -39,7 +48,7 @@ public final class Panel extends JPanel{
 		int w = mainWindow.getModel().getMaze().getWidth();
 		/*
 		 * dimension d'une case du labyrinthe
-		 * floatant pour mieux s'adapter ? la taille du panel
+		 * floatant pour mieux s'adapter à la taille du panel
 		 */
 		boxHeight = this.getHeight()/(float)l;
 		boxWidth = this.getWidth()/(float)w;
@@ -57,15 +66,13 @@ public final class Panel extends JPanel{
 				}
 				/*
 				 * quelques cases seront de largeur (resp hauteur) width+1 (resp height+1) pour compenser le surplus de pixels
-				 * (le pixel de trop est generalement ecras? par la case suivante)
+				 * (le pixel de trop est généralement écrasé par la case suivante)
 				 * On pourrait aussi faire toutes les cases de meme taille et compenser avec des murs comme dans la 1ere version de cette
 				 * fonction mais cela rend moins bien !
 				 */
 				g.drawImage(img,(int)(j*boxWidth),(int)(i*boxHeight),(int)boxWidth+1,(int)boxHeight+1,this);
 			}
 		}
-
-
 		drawDijkstra(g);
 	}
 
@@ -82,10 +89,7 @@ public final class Panel extends JPanel{
 	}
 
 
-
-	/*
-	 * A changer !
-	 */
+	
 	private final class PanelMouseListener extends MouseAdapter{
 
 		@Override
@@ -93,9 +97,7 @@ public final class Panel extends JPanel{
 			if (!mainWindow.getModel().isEditable()) {return;}
 
 			int j =(int)(e.getX()/boxWidth), i = (int)(e.getY()/boxHeight);
-			mainWindow.getModel().getMaze().change(i,j);
-			mainWindow.getModel().setSaved(false);
-			mainWindow.getModel().refresh();
+			mainWindow.getController().changeMaze(i,j);
 		}
 
 	}

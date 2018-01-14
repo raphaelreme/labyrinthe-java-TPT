@@ -8,6 +8,10 @@ import javax.swing.JFrame;
 import controller.MazeController;
 import modele.MazeModel;
 
+/*
+ * Fenetre principale
+ * Observe le modèle et se peint en fonction du modèle.
+ */
 public final class Frame extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
