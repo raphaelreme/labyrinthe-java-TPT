@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
 
-public final class EditMenu extends Menu{
+final class EditMenu extends Menu{
 
 	private static final long serialVersionUID = 1L;
 	

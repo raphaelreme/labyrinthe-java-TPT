@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  * On pourrait envisager dans une version supérieur, l'utilisation d'un GridLayout variable 
  * et d'une classe BoxPanel pour sous-traiter l'affichage du labyrinthe.
  */
-public final class Panel extends JPanel{
+final class Panel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 

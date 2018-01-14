@@ -1,7 +1,9 @@
 package dijkstra;
 import interfaces.*;
 
-
+/*
+ * Classe ne servant qu'à executer l'algorithme de dijkstra sur un graphe.
+ */
 public final class Dijkstra {
 	
 	private static PreviousInterface dijkstra(GraphInterface g,

@@ -16,7 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * new, open mais aussi lors de la fermeture de la fenetre. Elle permet alors à l'utilisateur
  * de sauvegarder son Maze si celui ci n'est pas déjà enregistré !
  */
-public final class Saver implements ActionListener {
+final class Saver implements ActionListener {
 
     private final Frame mainWindow;
 

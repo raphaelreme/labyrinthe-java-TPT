@@ -12,6 +12,12 @@ import box.MBox;
 import dijkstra.ASetWithOrder;
 import dijkstra.Dijkstra;
 
+/*
+ * Thread dédié à dijkstra.
+ * Les méthodes de pause et d'arret de la classe Thread ne devant plus être utilisée,
+ * cette classe gère elle même ces actions.
+ * 
+ */
 final class DijkstraThread implements Runnable{
 	
 	private static int compteur = 0;
@@ -94,7 +100,7 @@ final class DijkstraThread implements Runnable{
 	
 	
 	
-	//Permet l'arret du thread
+	//Permet l'arret/pause du thread
 	public void stopThread(){
     	runThread = false;
     }
@@ -129,11 +135,11 @@ final class DijkstraThread implements Runnable{
 		}
 	}
 	
-	
+	/* 
+	 * Met à jour le modèle qui va lui même prevenir la fénetre de se réafficher :
+	 * cela doit se faire dans l'EDT et non dans ce Thread.
+	 */
 	private void refresh(){
-		/* 
-		 * La mise à jour doit se faire dans l'EDT et non dans ce Thread
-		 */
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
 				model.refresh();

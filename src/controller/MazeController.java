@@ -11,7 +11,7 @@ import modele.MazeModel;
  * Controle les données reçues et les traite avant de les envoyer au modèle
  * 
  * Chacune de ses fonctions renvoie un entier caractérisant le contrôle
- * Si tout s'est bien passé elles renvoient 0
+ * Si tout s'est bien passé elles renvoient 0.
  */
 public final class MazeController {
 
@@ -55,7 +55,6 @@ public final class MazeController {
 		
 		return 0;
 	}
-	
 	
 	public int setFile(File f){
 		if (f == null){
@@ -112,7 +111,6 @@ public final class MazeController {
         
 		return -1;
 	}
-	
 	
 	
 	
@@ -192,6 +190,7 @@ public final class MazeController {
 		}
 		return -1; //En cas d'erreur
 	}
+	
 	
 	
 	//Panel

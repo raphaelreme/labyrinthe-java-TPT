@@ -13,7 +13,10 @@ import exception.MazeReadingException;
 
 /*
  * Contient les données du projet.
- * Permet la modification des données et prévient la Frame qui elle-même transmet le message à ses composants)
+ * Le modèle permet la modification de ses données (généralement par le contrôleur)
+ * 
+ * Il est observable, et peux prevenir ses observeurs en cas de changement.
+ * Notamment la Frame qui elle-même transmet le message à ses composants
  */
 public final class MazeModel extends Observable {
 

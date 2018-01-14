@@ -3,7 +3,7 @@ package interfaces;
 
 
 /*
- * Défini le père (Prev) d'un sommet v dans les chemins obtenus par dijkstra.
+ * Défini le père d'un sommet v dans l'arborescence obtenues par dijkstra.
  */
 public interface PreviousInterface {
 	public VertexInterface getPrev(VertexInterface v);

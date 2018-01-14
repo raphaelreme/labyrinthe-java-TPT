@@ -18,7 +18,10 @@ import box.WBox;
 import interfaces.GraphInterface;
 import interfaces.VertexInterface;
 
-
+/*
+ * Implémentation de GraphInterface pour un labyrinthe.
+ * Dédoublement des données pour augmenter l'efficacité de l'algorithme de dijkstra.
+ */
 public final class Maze implements GraphInterface {
 	
 	private int length;
@@ -32,6 +35,7 @@ public final class Maze implements GraphInterface {
 		emptyInit();
 		}
 	
+	@Override
 	public int getSize() {
 		return length*width;
 	}
@@ -44,6 +48,7 @@ public final class Maze implements GraphInterface {
 		return width;
 	}
 	
+	@Override
 	public int getWeight(VertexInterface x, VertexInterface y){
 		
 		//Normalement dans l'utilisation faite par Dijkstra cela n'est jamais le cas ! (x et y sont tjs voisins)
@@ -54,12 +59,14 @@ public final class Maze implements GraphInterface {
 		return 1;
 	}
 	
+	@Override
 	public ArrayList<VertexInterface> getVertices() {
 		//performances ici : ne pas avoir à retranscrire la matrice en liste à chaque appel !
 		return listeSommets;
 	}
 
-	//dans les 3 fonctions qui suivent il est plus pratique d'avoir une matrice plutot qu'une grosse liste, d'où la modélisation double
+	//dans les fonctions qui suivent il est plus pratique d'avoir une matrice plutot qu'une grosse liste, d'où la modélisation double
+	@Override
 	public ArrayList<VertexInterface> getNext(VertexInterface v) {	
 		MBox box = (MBox) v;
 		int i = box.getI();
@@ -159,7 +166,7 @@ public final class Maze implements GraphInterface {
 						tmp.add(b);
 						listeSommets.add(b);
 					} else {
-						throw new MazeReadingException(file.getName(),i,"Invalide letter");
+						throw new MazeReadingException(file.getName(),i,"Invalid letter");
 					}
 				}
 				matrice.add(tmp);
@@ -202,9 +209,10 @@ public final class Maze implements GraphInterface {
 		}
 	}
 	
+	/*
+	 * Renvoie la case de départ (la 1ere trouvee)
+	 */
 	public VertexInterface getStart(){
-		//Renvoie la case de départ (la 1ere trouvee)
-		
 		for (ArrayList<MBox> ligne : matrice){
 			for (MBox box : ligne){
 				if (box.getLetter() == "D")
@@ -214,8 +222,10 @@ public final class Maze implements GraphInterface {
 		return null;
 	}
 	
+	/*
+	 * Renvoie la case de d'arrivee
+	 */
 	public VertexInterface getEnd(){
-		//Renvoie la case de d'arrivee
 		for (ArrayList<MBox> ligne : matrice){
 			for (MBox box : ligne){
 				if (box.getLetter() == "A")
@@ -229,8 +239,13 @@ public final class Maze implements GraphInterface {
 		return ((MBox) matrice.get(i).get(j)).getLetter();
 	}
 
+	/*
+	 * Change la box en i,j par une autre.
+	 */
 	public void change(int i, int j){
-		//Pas top, trop de code pour une petite modification à cause des différentes classes de Box.
+		/* Pas top, trop de code pour une petite modification à cause des différentes classes de Box et
+		 * du double modèle.
+		 */
 		MBox box = matrice.get(i).get(j);
 		MBox newBox = null;
 

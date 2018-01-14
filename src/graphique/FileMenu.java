@@ -9,7 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public final class FileMenu extends Menu{
+final class FileMenu extends Menu{
 
     private static final long serialVersionUID = 1L;
     private final Saver saver;
@@ -106,7 +106,7 @@ public final class FileMenu extends Menu{
                 return;
 
             JFileChooser fc = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Texte","txt");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Text","txt");
             fc.setCurrentDirectory(new File("file"));
             fc.setFileFilter(filter);
             fc.setAcceptAllFileFilterUsed(false);
