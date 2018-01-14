@@ -28,7 +28,7 @@ public final class Frame extends JFrame implements Observer {
 		
 		this.setTitle("Maze");
 		this.setIconImage(model.getStart());
-		this.setSize(500,500);
+		this.setSize(700,700);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
