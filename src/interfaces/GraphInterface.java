@@ -13,7 +13,7 @@ public interface GraphInterface {
 	/*
 	 * Renvoie la liste des sommets du graphe.
 	 * L'ordre est quelconque.
-	 * */
+	 */
 	public ArrayList<VertexInterface> getVertices();
 	
 	
@@ -21,7 +21,7 @@ public interface GraphInterface {
 	/*
 	 * Renvoie la liste des sommets voisins du sommet v.
 	 * L'ordre est quelconque.
-	 * */
+	 */
 	public ArrayList<VertexInterface> getNext(VertexInterface v);
 	
 	

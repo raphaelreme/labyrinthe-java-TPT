@@ -9,7 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public final class FileMenu extends Menu{
+final class FileMenu extends Menu{
 
     private static final long serialVersionUID = 1L;
     private final Saver saver;
@@ -18,7 +18,7 @@ public final class FileMenu extends Menu{
 
     public FileMenu(Frame window){
         super("File",window);
-        saver = new Saver (window);
+        saver = new Saver(window);
 
         initNew();
         initOpen();
@@ -30,35 +30,7 @@ public final class FileMenu extends Menu{
 
     private void initNew(){
         JMenuItem _new = new JMenuItem("New");
-
-        _new.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                if (saver.save() == -1)
-                    return;
-
-            	String inputValue = (String) JOptionPane.showInputDialog(mainWindow,
-            			"Please input a correct size value","Set size",JOptionPane.PLAIN_MESSAGE,
-            			null,null,"10,10");
-            	
-            	
-                int r = mainWindow.getController().setNew(inputValue);
-                
-                if (r==0){
-                	return;
-                }
-                
-                String s = "Invalid size";
-                if (r==-1){
-                	s += "\nShould be : int length,int width";
-                } else if (r==1){
-                	s += "\nNegativ length or width";
-                } else {
-                	s+= "\nHas to be smaller (50*50 max)";
-                }
-                JOptionPane.showMessageDialog(mainWindow,s,"Error",JOptionPane.ERROR_MESSAGE);
-            	actionPerformed(e);
-            }
-        });
+        _new.addActionListener(new NewListener());
 
         this.add(_new);
     }
@@ -90,9 +62,41 @@ public final class FileMenu extends Menu{
         this.add(quit);
     }
 
+    
+    /*
+     * Les listeners pour les MenuItems :
+     */
+    
+    private final class NewListener implements ActionListener {
 
+		@Override
+		public void actionPerformed(ActionEvent e){
+            if (saver.save() == -1)
+                return;
 
-
+        	String inputValue = (String) JOptionPane.showInputDialog(mainWindow,
+        			"Please input a correct size value","Set size",JOptionPane.PLAIN_MESSAGE,
+        			null,null,"10,10");
+        	
+      
+            int r = mainWindow.getController().setNew(inputValue);
+            if (r==0){
+            	return;
+            }
+            
+            String s = "Invalid size";
+            if (r==-1){
+            	s += "\nShould be : int length,int width";
+            } else if (r==1){
+            	s += "\nNegativ length or width";
+            } else {
+            	s+= "\nHas to be smaller (50*50 max)";
+            }
+            JOptionPane.showMessageDialog(mainWindow,s,"Error",JOptionPane.ERROR_MESSAGE);
+        	actionPerformed(e);
+        }
+    	
+    }
 
     private final class OpenListener implements ActionListener {
 
@@ -102,7 +106,7 @@ public final class FileMenu extends Menu{
                 return;
 
             JFileChooser fc = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Texte","txt");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Text","txt");
             fc.setCurrentDirectory(new File("file"));
             fc.setFileFilter(filter);
             fc.setAcceptAllFileFilterUsed(false);
@@ -113,6 +117,7 @@ public final class FileMenu extends Menu{
             showDialog(fc);
 		}
 		
+		//se repète jusqu'à avoir une réponse valide de l'utilisateur
 		public void showDialog(JFileChooser fc){
 			int returnVal = fc.showOpenDialog(mainWindow);
 			if (returnVal != 0){
@@ -129,25 +134,5 @@ public final class FileMenu extends Menu{
 			}
 		}
     }
-
-    /*
-     * 
-     *
-    private class SaveListener extends OpenListener {
-
-        @Override
-        public void showDialog(JFileChooser fc){
-            int returnVal = fc.showSaveDialog(mainWindow);
-            if (returnVal != 0){
-                return;
-            }
-            
-            int r = mainWindow.getController().save(fc.getSelectedFile());
-            if (r == -1){
-            	showDialog(fc); //Le format n'est pas valide, on recomence
-            }
-        }
-    }
-    */
    
 }

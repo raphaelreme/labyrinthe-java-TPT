@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
 
-public class EditMenu extends Menu{
+final class EditMenu extends Menu{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -26,7 +26,7 @@ public class EditMenu extends Menu{
 	}
 	
 	
-	
+	@Override
 	public void notifyForUpdate(){
 		if (mainWindow.getModel().isEditable()){
 			editable.setText("Edit : Enabled");

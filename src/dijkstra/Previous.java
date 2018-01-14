@@ -5,6 +5,9 @@ import java.util.Hashtable;
 import interfaces.PreviousInterface;
 import interfaces.VertexInterface;
 
+/*
+ * Implementation du PreviousInterface avec une HashTable
+ */
 final class Previous implements PreviousInterface {
 	
 	Hashtable<VertexInterface,VertexInterface> t = new Hashtable<VertexInterface,VertexInterface>();

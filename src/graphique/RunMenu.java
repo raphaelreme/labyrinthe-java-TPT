@@ -9,7 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
-public final class RunMenu extends Menu{
+final class RunMenu extends Menu{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -122,7 +122,7 @@ public final class RunMenu extends Menu{
 		this.add(speed);
 	}
 	
-	
+	@Override
 	public void notifyForUpdate(){
 		boolean b = mainWindow.getModel().isRunning();
 		
@@ -140,14 +140,15 @@ public final class RunMenu extends Menu{
 	
 	
 	
+	
 	private final class SpeedListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int r =mainWindow.getController().setSpeed(((JRadioButtonMenuItem)e.getSource()).getText());
+			int r = mainWindow.getController().setSpeed(((JRadioButtonMenuItem)e.getSource()).getText());
 			
 			if (r == -1){
-				JOptionPane.showMessageDialog(mainWindow,"Changement de vitesse invalide","Erreur",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(mainWindow,"Invalid speed !","Error",JOptionPane.ERROR_MESSAGE);
 				selectedSpeed.setSelected(true); //On reselectionne le bon bouton
 			} else if (r == 0){
 				selectedSpeed = (JRadioButtonMenuItem)e.getSource();
